@@ -22,8 +22,8 @@ export default function Navbar() {
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-stone-600">
-          <Link href="/" className="hover:text-teal-600 transition-colors">Find Clinics</Link>
-          <Link href="#how-it-works" className="hover:text-teal-600 transition-colors">How It Works</Link>
+          <Link href="/" className="hover:text-blue-600 transition-colors">Home</Link>
+          <Link href="#how-it-works" className="hover:text-stone-900 transition-colors">How It Works</Link>
           <a
             href="mailto:onboard@dentindia.in"
             className="px-4 py-2 rounded-full bg-teal-600 text-white hover:bg-teal-700 transition-colors text-sm"
@@ -45,8 +45,8 @@ export default function Navbar() {
       {/* Mobile menu */}
       {open && (
         <div className="md:hidden border-t border-stone-100 bg-white px-4 py-4 flex flex-col gap-4 text-sm font-medium text-stone-700">
-          <Link href="/" onClick={() => setOpen(false)} className="hover:text-teal-600">Find Clinics</Link>
-          <Link href="#how-it-works" onClick={() => setOpen(false)} className="hover:text-teal-600">How It Works</Link>
+          <Link href="/" onClick={() => setOpen(false)} className="hover:text-blue-600">Home</Link>
+          <Link href="#how-it-works" onClick={() => setOpen(false)} className="hover:text-stone-900">How It Works</Link>
           <a
             href="mailto:onboard@dentindia.in"
             className="inline-block px-4 py-2 rounded-full bg-teal-600 text-white text-center hover:bg-teal-700 transition"
