@@ -6,8 +6,9 @@ import { Building2, Plus, Pencil, Trash2, Search, MapPin, Users } from "lucide-r
 import { getAdminClinics, deleteClinic, initializeAdminClinics } from "@/lib/adminData";
 import { CLINICS } from "@/lib/data";
 import type { Clinic } from "@/lib/data";
+import ProtectedRoute from "@/components/admin/ProtectedRoute";
 
-export default function ClinicsPage() {
+function ClinicsPageContent() {
   const [clinics, setClinics] = useState<Clinic[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCity, setFilterCity] = useState("all");
@@ -215,5 +216,13 @@ export default function ClinicsPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function ClinicsPage() {
+  return (
+    <ProtectedRoute>
+      <ClinicsPageContent />
+    </ProtectedRoute>
   );
 }

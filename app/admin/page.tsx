@@ -6,8 +6,9 @@ import { Building2, MapPin, Stethoscope, ArrowRight } from "lucide-react";
 import { getStats, getAdminClinics, initializeAdminClinics } from "@/lib/adminData";
 import { CLINICS } from "@/lib/data";
 import type { Clinic } from "@/lib/data";
+import ProtectedRoute from "@/components/admin/ProtectedRoute";
 
-export default function AdminDashboard() {
+function AdminDashboardContent() {
   const [stats, setStats] = useState({ totalClinics: 0, totalCities: 0, totalServices: 0 });
   const [recentClinics, setRecentClinics] = useState<Clinic[]>([]);
 
@@ -128,5 +129,13 @@ export default function AdminDashboard() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function AdminDashboard() {
+  return (
+    <ProtectedRoute>
+      <AdminDashboardContent />
+    </ProtectedRoute>
   );
 }
