@@ -112,10 +112,34 @@ export const CLINICS: Clinic[] = [
     image: "👨‍⚕️",
     services: [
       { name: "Consultation", description: "Digital X-ray, intraoral scan, and smile simulation preview.", duration: "40 min", priceFrom: 400, rating: 4.8, reviewCount: 31 },
-      { name: "Root Canal Treatment", description: "Microscope-assisted RCT for precision in complex cases.", duration: "60 min", priceFrom: 5000, rating: 4.9, reviewCount: 28 },
+      {
+        name: "Root Canal Treatment",
+        description: "Microscope-assisted RCT for precision in complex cases.",
+        duration: "60 min",
+        priceFrom: 3500,
+        priceTo: 5000,
+        rating: 4.9,
+        reviewCount: 28,
+        variants: [
+          { type: "Single-Sitting RCT", price: 3500, duration: "60 min" },
+          { type: "Multi-Visit with Medication", price: 5000, duration: "3–4 visits" },
+        ]
+      },
       { name: "Dental Implants", description: "BioHorizons implants. Same-day teeth in eligible cases.", duration: "1–3 sittings", priceFrom: 28000, rating: 4.9, reviewCount: 19 },
       { name: "Digital Smile Design", description: "Mock-up preview before any cosmetic procedure. Fully reversible trial smile.", duration: "60 min", priceFrom: 1500, rating: 4.8, reviewCount: 22 },
-      { name: "Teeth Whitening", description: "Philips Zoom in-office whitening. Certified shade chart documentation.", duration: "60 min", priceFrom: 7500, rating: 4.7, reviewCount: 18 },
+      {
+        name: "Teeth Whitening",
+        description: "Philips Zoom in-office whitening. Certified shade chart documentation.",
+        duration: "60 min",
+        priceFrom: 5000,
+        priceTo: 7500,
+        rating: 4.7,
+        reviewCount: 18,
+        variants: [
+          { type: "Basic Zoom Whitening", price: 5000, duration: "45 min" },
+          { type: "Philips Zoom + Take-Home Trays", price: 7500, duration: "60 min" },
+        ]
+      },
       { name: "Scaling & Polishing", description: "Cavitron ultrasonic scaling + EMS Airflow polishing.", duration: "30 min", priceFrom: 1000, rating: 4.8, reviewCount: 15 },
       { name: "Tooth Extraction", description: "Simple and surgical extractions including wisdom tooth removal.", duration: "20–60 min", priceFrom: 800, rating: 4.7, reviewCount: 12 },
     ],
@@ -172,7 +196,20 @@ export const CLINICS: Clinic[] = [
     services: [
       { name: "Consultation", description: "CBCT 3D scan + full periodontal charting + treatment plan.", duration: "45 min", priceFrom: 700, rating: 4.9, reviewCount: 38 },
       { name: "Root Canal Treatment", description: "Single visit RCT using WaveOne Gold rotary system.", duration: "75 min", priceFrom: 4800, rating: 4.7, reviewCount: 38 },
-      { name: "Dental Implants", description: "MIS implants with guided bone regeneration where needed.", duration: "2–3 sittings", priceFrom: 26000, rating: 4.8, reviewCount: 14 },
+      {
+        name: "Dental Implants",
+        description: "MIS implants with guided bone regeneration where needed.",
+        duration: "2–3 sittings",
+        priceFrom: 26000,
+        priceTo: 35000,
+        rating: 4.8,
+        reviewCount: 14,
+        variants: [
+          { type: "Single Implant + Crown", price: 26000, duration: "3–4 months" },
+          { type: "Multiple Implants (2+)", priceMin: 50000, priceMax: 150000, duration: "4–6 months" },
+          { type: "Full Mouth Implants (All-on-4)", priceMin: 200000, priceMax: 350000, duration: "6–12 months" },
+        ]
+      },
       { name: "Laser Gum Treatment", description: "LANAP protocol for deep cleaning without surgery. Minimal downtime.", duration: "60 min", priceFrom: 8000, rating: 4.9, reviewCount: 26 },
       { name: "Teeth Whitening", description: "Opalescence in-office whitening with custom take-home trays included.", duration: "60 min", priceFrom: 7000, rating: 4.8, reviewCount: 17 },
       { name: "Scaling & Polishing", description: "Subgingival scaling, root planing, and chlorhexidine irrigation.", duration: "45 min", priceFrom: 1200, rating: 4.9, reviewCount: 21 },
