@@ -17,6 +17,7 @@ interface Booking {
   preferredDate: string;
   preferredTime: string;
   notes: string;
+  selectedVariant?: string;
   createdAt: string;
 }
 
@@ -76,7 +77,7 @@ Email: ${booking.email}
 Phone: ${booking.phone}
 
 APPOINTMENT DETAILS
-Service: ${booking.service}
+Service: ${booking.service}${booking.selectedVariant ? ` (${booking.selectedVariant})` : ""}
 Price: ₹${booking.price.toLocaleString()}
 Date: ${booking.preferredDate}
 Time: ${booking.preferredTime}
@@ -144,7 +145,14 @@ Notes: ${booking.notes || "None"}
                 </div>
                 <div>
                   <p className="text-xs text-stone-500 font-medium uppercase tracking-wide">Service</p>
-                  <p className="text-sm font-semibold text-stone-900">{booking.service}</p>
+                  <p className="text-sm font-semibold text-stone-900">
+                    {booking.service}
+                    {booking.selectedVariant && (
+                      <span className="block text-xs text-stone-600 font-normal mt-1">
+                        Option: {booking.selectedVariant}
+                      </span>
+                    )}
+                  </p>
                 </div>
               </div>
 

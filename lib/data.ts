@@ -5,14 +5,24 @@ export interface ServiceReview {
   date: string
 }
 
+export interface ServiceVariant {
+  type: string
+  price?: number
+  priceMin?: number
+  priceMax?: number
+  duration: string
+}
+
 export interface Service {
   name: string
   description: string
   duration: string
   priceFrom: number
+  priceTo?: number
   rating?: number
   reviewCount?: number
   reviews?: ServiceReview[]
+  variants?: ServiceVariant[]
 }
 
 export interface Clinic {
@@ -62,7 +72,20 @@ export const CLINICS: Clinic[] = [
       { name: "Consultation", description: "Comprehensive oral examination, X-ray review, and personalised treatment plan.", duration: "30 min", priceFrom: 500, rating: 4.9, reviewCount: 28 },
       { name: "Root Canal Treatment", description: "Single-sitting RCT using rotary endodontics with rubber dam isolation.", duration: "60–90 min", priceFrom: 4500, rating: 4.8, reviewCount: 45 },
       { name: "Dental Implants", description: "Titanium implants with ceramic crown. Lifetime structural guarantee.", duration: "2–3 sittings", priceFrom: 25000, rating: 4.9, reviewCount: 12 },
-      { name: "Braces & Aligners", description: "Metal, ceramic, and clear aligner options with monthly follow-ups.", duration: "12–18 months", priceFrom: 18000, rating: 4.7, reviewCount: 23 },
+      {
+        name: "Braces & Aligners",
+        description: "Metal, ceramic, and clear aligner options with monthly follow-ups.",
+        duration: "12–18 months",
+        priceFrom: 18000,
+        priceTo: 85000,
+        rating: 4.7,
+        reviewCount: 23,
+        variants: [
+          { type: "Metal Wired", price: 18000, duration: "12–18 months" },
+          { type: "Ceramic Self-Ligating", price: 35000, duration: "12–18 months" },
+          { type: "Clear Aligners", priceMin: 45000, priceMax: 85000, duration: "6–12 months" },
+        ]
+      },
       { name: "Teeth Whitening", description: "In-clinic laser whitening. Upto 8 shades whiter in one session.", duration: "45 min", priceFrom: 6000, rating: 4.9, reviewCount: 34 },
       { name: "Scaling & Polishing", description: "Ultrasonic scaling to remove tartar, followed by air polishing.", duration: "30 min", priceFrom: 800, rating: 4.8, reviewCount: 19 },
     ],

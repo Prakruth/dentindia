@@ -24,6 +24,7 @@ function BookingForm() {
     preferredTime: "",
     notes: "",
     agreeToTerms: false,
+    selectedVariant: "",
   });
 
   const [submitted, setSubmitted] = useState(false);
@@ -66,11 +67,17 @@ function BookingForm() {
 
     // Simulate API call
     setTimeout(() => {
+      let price = service.priceFrom;
+      if (formData.selectedVariant && service.variants) {
+        const selectedVar = service.variants.find((v) => v.type === formData.selectedVariant);
+        if (selectedVar?.price) price = selectedVar.price;
+      }
+
       const booking = {
         id: `BOOK-${Date.now()}`,
         clinic: clinic.name,
         service: service.name,
-        price: service.priceFrom,
+        price,
         ...formData,
         createdAt: new Date().toISOString(),
       };
@@ -151,7 +158,12 @@ function BookingForm() {
                 <div className="grid grid-cols-2 gap-3 pt-2 border-t border-stone-200">
                   <div>
                     <p className="text-xs text-stone-500 font-medium uppercase tracking-wide">Price</p>
-                    <p className="text-lg font-bold text-blue-600">₹{service.priceFrom.toLocaleString()}</p>
+                    <p className="text-lg font-bold text-blue-600">
+                      ₹{service.priceFrom.toLocaleString()}
+                      {service.priceTo && service.priceTo > service.priceFrom && (
+                        <span className="text-sm"> – ₹{service.priceTo.toLocaleString()}</span>
+                      )}
+                    </p>
                   </div>
                   <div>
                     <p className="text-xs text-stone-500 font-medium uppercase tracking-wide">Duration</p>
@@ -162,6 +174,41 @@ function BookingForm() {
             </div>
           </div>
         </div>
+
+        {/* Variant Selection (if available) */}
+        {service.variants && service.variants.length > 0 && (
+          <div className="bg-stone-50 border border-stone-200 rounded-2xl p-6 mb-8">
+            <h3 className="font-semibold text-stone-900 mb-4">Select Option</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {service.variants.map((variant, idx) => (
+                <label
+                  key={idx}
+                  className={`flex items-start gap-3 p-4 border-2 rounded-lg cursor-pointer transition ${
+                    formData.selectedVariant === variant.type
+                      ? "border-blue-600 bg-blue-50"
+                      : "border-stone-200 bg-white hover:border-blue-300"
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="variant"
+                    value={variant.type}
+                    checked={formData.selectedVariant === variant.type}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, selectedVariant: e.target.value }))}
+                    className="mt-1 w-4 h-4"
+                  />
+                  <div className="flex-1">
+                    <p className="font-semibold text-stone-900 text-sm">{variant.type}</p>
+                    <p className="text-blue-600 font-bold text-sm mt-1">
+                      {variant.price ? `₹${variant.price.toLocaleString()}` : `₹${variant.priceMin?.toLocaleString()} – ₹${variant.priceMax?.toLocaleString()}`}
+                    </p>
+                    <p className="text-xs text-stone-600 mt-1">{variant.duration}</p>
+                  </div>
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Booking Form */}
         <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-6 border border-stone-200">
@@ -314,9 +361,9 @@ function BookingForm() {
             {/* Submit Button */}
             <button
               type="submit"
-              disabled={loading || !formData.agreeToTerms}
+              disabled={loading || !formData.agreeToTerms || (service.variants && service.variants.length > 0 && !formData.selectedVariant)}
               className={`w-full py-3 rounded-lg font-semibold text-white transition-all ${
-                loading || !formData.agreeToTerms
+                loading || !formData.agreeToTerms || (service.variants && service.variants.length > 0 && !formData.selectedVariant)
                   ? "bg-stone-300 cursor-not-allowed"
                   : "bg-blue-600 hover:bg-blue-700 active:scale-95"
               }`}

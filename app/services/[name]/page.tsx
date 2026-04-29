@@ -252,8 +252,18 @@ export default function ServiceComparisonPage({ params }: PageProps) {
                     <p className="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-1">
                       {service.name}
                     </p>
-                    <p className="text-2xl font-bold text-stone-900">₹{service.priceFrom.toLocaleString()}</p>
+                    <p className="text-2xl font-bold text-stone-900">
+                      ₹{service.priceFrom.toLocaleString()}
+                      {service.priceTo && service.priceTo > service.priceFrom && (
+                        <span> – ₹{service.priceTo.toLocaleString()}</span>
+                      )}
+                    </p>
                     <p className="text-xs text-stone-600 mt-1">{service.duration}</p>
+                    {service.variants && service.variants.length > 0 && (
+                      <p className="text-xs text-blue-600 font-medium mt-2 cursor-help" title="Multiple options available">
+                        {service.variants.length} variant{service.variants.length !== 1 ? "s" : ""} available
+                      </p>
+                    )}
                   </div>
 
                   {/* Service Rating */}
