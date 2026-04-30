@@ -8,9 +8,10 @@ interface PageProps {
   params: { id: string };
 }
 
+export const dynamic = 'force-dynamic';
+
 export async function generateStaticParams() {
-  const clinics = await getAllClinics();
-  return clinics.map((c) => ({ id: c.id }));
+  return [];
 }
 
 export async function generateMetadata({ params }: PageProps) {

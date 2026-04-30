@@ -1,11 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { addClinic, initializeAdminClinics } from "@/lib/adminData";
-import { CLINICS } from "@/lib/data";
+import { addClinic, initializeAdminClinics, CLINICS } from "@/lib/adminData";
 import ClinicForm from "@/components/admin/ClinicForm";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
-import type { Clinic } from "@/lib/data";
+import type { Clinic } from "@/lib/types";
 
 function AddClinicPageContent() {
   const router = useRouter();

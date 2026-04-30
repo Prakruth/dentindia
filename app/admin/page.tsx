@@ -3,9 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Building2, MapPin, Stethoscope, ArrowRight } from "lucide-react";
-import { getStats, getAdminClinics, initializeAdminClinics } from "@/lib/adminData";
-import { CLINICS } from "@/lib/data";
-import type { Clinic } from "@/lib/data";
+import { getStats, getAdminClinics, initializeAdminClinics, CLINICS } from "@/lib/adminData";
+import type { Clinic } from "@/lib/types";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 
 function AdminDashboardContent() {

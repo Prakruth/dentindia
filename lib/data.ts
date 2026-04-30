@@ -116,7 +116,7 @@ function mapClinicFromDB(dbClinic: any): Clinic {
     phone: dbClinic.phone,
     email: dbClinic.email,
     rating: dbClinic.rating,
-    reviewCount: dbClinic.review_count,
+    review_count: dbClinic.review_count,
     experience: dbClinic.experience,
     tagline: dbClinic.tagline,
     about: dbClinic.about,

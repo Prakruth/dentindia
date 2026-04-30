@@ -2,11 +2,10 @@
 
 import { useRouter, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getClinicById, updateClinic, initializeAdminClinics } from "@/lib/adminData";
-import { CLINICS } from "@/lib/data";
+import { getClinicById, updateClinic, initializeAdminClinics, CLINICS } from "@/lib/adminData";
 import ClinicForm from "@/components/admin/ClinicForm";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
-import type { Clinic } from "@/lib/data";
+import type { Clinic } from "@/lib/types";
 
 function EditClinicPageContent() {
   const router = useRouter();

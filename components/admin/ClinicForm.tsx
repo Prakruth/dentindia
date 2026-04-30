@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Plus, Trash2, X } from "lucide-react";
-import type { Clinic, Service, ServiceVariant } from "@/lib/data";
+import type { Clinic, Service, ServiceVariant } from "@/lib/types";
 
 const AVAILABLE_SERVICES = [
   "Consultation",
@@ -40,7 +40,7 @@ export default function ClinicForm({ initialClinic, onSubmit, isLoading = false 
       phone: "",
       email: "",
       rating: 4.5,
-      reviewCount: 0,
+      review_count: 0,
       experience: 0,
       tagline: "",
       about: "",
@@ -98,9 +98,9 @@ export default function ClinicForm({ initialClinic, onSubmit, isLoading = false 
       name: "",
       description: "",
       duration: "",
-      priceFrom: 0,
+      price_from: 0,
       rating: 4.5,
-      reviewCount: 0,
+      review_count: 0,
     });
     setShowServiceForm(true);
   };
@@ -295,7 +295,7 @@ export default function ClinicForm({ initialClinic, onSubmit, isLoading = false 
                 <div key={idx} className="bg-stone-50 p-4 rounded-lg flex items-start justify-between group hover:bg-stone-100 transition">
                   <div className="flex-1 cursor-pointer" onClick={() => handleEditService(service)}>
                     <p className="font-medium text-stone-900">{service.name}</p>
-                    <p className="text-sm text-stone-600">₹{service.priceFrom.toLocaleString()}{service.priceTo && service.priceTo > service.priceFrom ? ` – ₹${service.priceTo.toLocaleString()}` : ""}</p>
+                    <p className="text-sm text-stone-600">₹{service.price_from.toLocaleString()}{service.price_to && service.price_to > service.price_from ? ` – ₹${service.price_to.toLocaleString()}` : ""}</p>
                     {service.variants && service.variants.length > 0 && (
                       <p className="text-xs text-blue-600 mt-1">{service.variants.length} variants</p>
                     )}
@@ -416,8 +416,8 @@ function ServiceFormModal({ service, onChange, onSave, onClose }: ServiceFormMod
               <label className="block text-sm font-medium text-stone-700 mb-2">Price From *</label>
               <input
                 type="number"
-                value={service.priceFrom}
-                onChange={(e) => onChange({ ...service, priceFrom: parseInt(e.target.value) || 0 })}
+                value={service.price_from}
+                onChange={(e) => onChange({ ...service, price_from: parseInt(e.target.value) || 0 })}
                 placeholder="0"
                 className="w-full px-4 py-2.5 border border-stone-200 rounded-lg focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition"
               />
@@ -426,8 +426,8 @@ function ServiceFormModal({ service, onChange, onSave, onClose }: ServiceFormMod
               <label className="block text-sm font-medium text-stone-700 mb-2">Price To (Optional)</label>
               <input
                 type="number"
-                value={service.priceTo || ""}
-                onChange={(e) => onChange({ ...service, priceTo: e.target.value ? parseInt(e.target.value) : undefined })}
+                value={service.price_to || ""}
+                onChange={(e) => onChange({ ...service, price_to: e.target.value ? parseInt(e.target.value) : undefined })}
                 placeholder="0"
                 className="w-full px-4 py-2.5 border border-stone-200 rounded-lg focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition"
               />

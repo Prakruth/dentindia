@@ -1,5 +1,5 @@
 import { Clock, IndianRupee } from "lucide-react";
-import type { Service } from "@/lib/data";
+import type { Service } from "@/lib/types";
 
 interface ServiceCardProps {
   service: Service;
@@ -19,7 +19,7 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
         </span>
         <span className="flex items-center gap-0.5 font-semibold text-teal-700">
           <IndianRupee size={13} />
-          {service.priceFrom.toLocaleString("en-IN")}
+          {service.price_from.toLocaleString("en-IN")}
           <span className="text-stone-400 font-normal text-xs ml-0.5">onwards</span>
         </span>
       </div>

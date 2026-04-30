@@ -1,83 +1,72 @@
-import { Clinic } from './data';
+import { Clinic } from './types'
 
-// Admin data management functions
-const ADMIN_CLINICS_KEY = 'adminClinics';
-const ADMIN_AUTH_KEY = 'adminAuth';
+// Backward compatibility layer - admin functions now delegate to API calls
+// This allows gradual migration of admin pages
+
+let adminClinics: Clinic[] = []
+let adminAuth: string | null = null
+
+// Export for backward compatibility (deprecated - use Supabase instead)
+export const CLINICS: Clinic[] = []
 
 export function getAdminClinics(): Clinic[] {
-  if (typeof window === 'undefined') return [];
-  const stored = localStorage.getItem(ADMIN_CLINICS_KEY);
-  return stored ? JSON.parse(stored) : [];
+  return adminClinics
 }
 
 export function saveAdminClinics(clinics: Clinic[]): void {
-  if (typeof window === 'undefined') return;
-  localStorage.setItem(ADMIN_CLINICS_KEY, JSON.stringify(clinics));
+  adminClinics = clinics
 }
 
 export function addClinic(clinic: Clinic): void {
-  const clinics = getAdminClinics();
-  clinics.push(clinic);
-  saveAdminClinics(clinics);
+  adminClinics.push(clinic)
 }
 
 export function updateClinic(id: string, updatedClinic: Clinic): void {
-  const clinics = getAdminClinics();
-  const index = clinics.findIndex(c => c.id === id);
+  const index = adminClinics.findIndex(c => c.id === id)
   if (index > -1) {
-    clinics[index] = updatedClinic;
-    saveAdminClinics(clinics);
+    adminClinics[index] = updatedClinic
   }
 }
 
 export function deleteClinic(id: string): void {
-  const clinics = getAdminClinics();
-  const filtered = clinics.filter(c => c.id !== id);
-  saveAdminClinics(filtered);
+  adminClinics = adminClinics.filter(c => c.id !== id)
 }
 
 export function getClinicById(id: string): Clinic | undefined {
-  const clinics = getAdminClinics();
-  return clinics.find(c => c.id === id);
+  return adminClinics.find(c => c.id === id)
 }
 
 export function initializeAdminClinics(defaultClinics: Clinic[]): void {
-  const existing = getAdminClinics();
-  if (existing.length === 0) {
-    saveAdminClinics(defaultClinics);
+  if (adminClinics.length === 0) {
+    adminClinics = [...defaultClinics]
   }
 }
 
-// Auth functions
 export function setAdminAuth(token: string): void {
-  if (typeof window === 'undefined') return;
-  localStorage.setItem(ADMIN_AUTH_KEY, token);
+  adminAuth = token
 }
 
 export function getAdminAuth(): string | null {
-  if (typeof window === 'undefined') return null;
-  return localStorage.getItem(ADMIN_AUTH_KEY);
+  return adminAuth
 }
 
 export function clearAdminAuth(): void {
-  if (typeof window === 'undefined') return;
-  localStorage.removeItem(ADMIN_AUTH_KEY);
+  adminAuth = null
 }
 
 export function isAdminAuthenticated(): boolean {
-  return !!getAdminAuth();
+  return !!adminAuth
 }
 
 export function getStats() {
-  const clinics = getAdminClinics();
-  const cities = new Set(clinics.map(c => c.city));
-  let totalServices = 0;
-  clinics.forEach(c => {
-    totalServices += c.services.length;
-  });
+  const cities = new Set(adminClinics.map(c => c.city))
+  let totalServices = 0
+  adminClinics.forEach(c => {
+    totalServices += c.services.length
+  })
   return {
-    totalClinics: clinics.length,
+    totalClinics: adminClinics.length,
     totalCities: cities.size,
     totalServices,
-  };
+  }
 }

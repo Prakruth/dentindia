@@ -42,7 +42,8 @@ export interface Clinic {
   phone: string
   email: string
   rating: number
-  reviewCount: number
+  review_count: number
+  reviewCount?: number // deprecated, use review_count
   experience: number
   tagline: string
   about: string

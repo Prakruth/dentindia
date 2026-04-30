@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { MapPin, Star, Clock, ChevronRight } from "lucide-react";
-import type { Clinic } from "@/lib/data";
+import type { Clinic } from "@/lib/types";
 
 interface ClinicCardProps {
   clinic: Clinic;

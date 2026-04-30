@@ -3,9 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Building2, Plus, Pencil, Trash2, Search, MapPin, Users } from "lucide-react";
-import { getAdminClinics, deleteClinic, initializeAdminClinics } from "@/lib/adminData";
-import { CLINICS } from "@/lib/data";
-import type { Clinic } from "@/lib/data";
+import { getAdminClinics, deleteClinic, initializeAdminClinics, CLINICS } from "@/lib/adminData";
+import type { Clinic } from "@/lib/types";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 
 function ClinicsPageContent() {
