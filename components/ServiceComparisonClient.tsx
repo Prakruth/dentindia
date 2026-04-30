@@ -121,12 +121,15 @@ export default function ServiceComparisonClient({
         {comparisons.length > 0 ? (
           <div className="space-y-4">
             {comparisons.map((match) => (
-              <Link
+              <div
                 key={`${match.clinic.id}-${match.service.id}`}
-                href={`/clinic/${match.clinic.id}`}
                 className="block"
               >
-                <div className="bg-white rounded-lg border border-stone-200 p-6 hover:shadow-lg hover:border-blue-400 transition">
+                <Link
+                  href={`/clinic/${match.clinic.id}`}
+                  className="block"
+                >
+                  <div className="bg-white rounded-lg border border-stone-200 p-6 hover:shadow-lg hover:border-blue-400 transition">
                   <div className="flex items-start justify-between mb-4">
                     <div>
                       <div className="flex items-center gap-2 mb-1">
@@ -161,13 +164,18 @@ export default function ServiceComparisonClient({
                       <span>{match.service.review_count || 0} reviews</span>
                     </div>
                     <div className="text-right">
-                      <button className="px-3 py-1 bg-blue-600 text-white rounded text-xs font-semibold hover:bg-blue-700 transition">
-                        View Details
-                      </button>
+                      <Link
+                        href={`/booking?clinic=${match.clinic.id}&service=${encodeURIComponent(match.service.name)}`}
+                        onClick={(e) => e.stopPropagation()}
+                        className="inline-block px-3 py-1 bg-blue-600 text-white rounded text-xs font-semibold hover:bg-blue-700 transition"
+                      >
+                        Book Now
+                      </Link>
                     </div>
                   </div>
                 </div>
-              </Link>
+                </Link>
+              </div>
             ))}
           </div>
         ) : (
