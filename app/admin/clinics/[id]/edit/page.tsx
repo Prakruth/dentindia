@@ -2,7 +2,6 @@
 
 import { useRouter, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getClinicById, updateClinic, initializeAdminClinics, CLINICS } from "@/lib/adminData";
 import ClinicForm from "@/components/admin/ClinicForm";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 import type { Clinic } from "@/lib/types";
@@ -17,25 +16,46 @@ function EditClinicPageContent() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    // Initialize if needed
-    initializeAdminClinics(CLINICS);
+    const fetchClinic = async () => {
+      try {
+        const response = await fetch(`/api/clinics/${clinicId}`);
+        if (response.ok) {
+          const data = await response.json();
+          setClinic(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch clinic:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    // Load clinic
-    const foundClinic = getClinicById(clinicId);
-    if (foundClinic) {
-      setClinic(foundClinic);
+    if (clinicId) {
+      fetchClinic();
     }
-    setLoading(false);
   }, [clinicId]);
 
-  const handleSubmit = (updatedClinic: Clinic) => {
+  const handleSubmit = async (updatedClinic: Clinic) => {
     setIsSubmitting(true);
 
-    // Update in localStorage
-    updateClinic(clinicId, updatedClinic);
+    try {
+      const response = await fetch(`/api/clinics/${clinicId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedClinic),
+      });
 
-    // Redirect to clinics list
-    router.push("/admin/clinics");
+      if (response.ok) {
+        router.push("/admin/clinics");
+      } else {
+        alert("Failed to update clinic");
+      }
+    } catch (error) {
+      console.error("Update failed:", error);
+      alert("Error updating clinic");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (loading) {

@@ -3,21 +3,43 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Building2, MapPin, Stethoscope, ArrowRight } from "lucide-react";
-import { getStats, getAdminClinics, initializeAdminClinics, CLINICS } from "@/lib/adminData";
 import type { Clinic } from "@/lib/types";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 
 function AdminDashboardContent() {
   const [stats, setStats] = useState({ totalClinics: 0, totalCities: 0, totalServices: 0 });
   const [recentClinics, setRecentClinics] = useState<Clinic[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    initializeAdminClinics(CLINICS);
-    const newStats = getStats();
-    setStats(newStats);
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/clinics");
+        const clinics: Clinic[] = await response.json();
 
-    const clinics = getAdminClinics();
-    setRecentClinics(clinics.slice(-3).reverse());
+        // Calculate stats
+        const cities = new Set(clinics.map(c => c.city));
+        let totalServices = 0;
+        clinics.forEach(c => {
+          totalServices += c.services.length;
+        });
+
+        setStats({
+          totalClinics: clinics.length,
+          totalCities: cities.size,
+          totalServices,
+        });
+
+        // Get recent clinics (last 3)
+        setRecentClinics(clinics.slice(-3).reverse());
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (

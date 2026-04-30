@@ -1,32 +1,42 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { addClinic, initializeAdminClinics, CLINICS } from "@/lib/adminData";
+import { useState } from "react";
 import ClinicForm from "@/components/admin/ClinicForm";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 import type { Clinic } from "@/lib/types";
 
 function AddClinicPageContent() {
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (clinic: Clinic) => {
-    // Ensure clinic has an ID
-    const clinicToSave = {
-      ...clinic,
-      id: clinic.id || `clinic-${Date.now()}`,
-    };
+  const handleSubmit = async (clinic: Clinic) => {
+    setIsSubmitting(true);
 
-    // Add to localStorage
-    addClinic(clinicToSave);
+    try {
+      const response = await fetch("/api/clinics", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(clinic),
+      });
 
-    // Redirect to clinics list
-    router.push("/admin/clinics");
+      if (response.ok) {
+        router.push("/admin/clinics");
+      } else {
+        alert("Failed to create clinic");
+      }
+    } catch (error) {
+      console.error("Create failed:", error);
+      alert("Error creating clinic");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <ClinicForm
       onSubmit={handleSubmit}
-      isLoading={false}
+      isLoading={isSubmitting}
     />
   );
 }
