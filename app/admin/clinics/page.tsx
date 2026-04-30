@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Building2, Plus, Pencil, Trash2, Search, MapPin, Users } from "lucide-react";
-import { getAdminClinics, deleteClinic, initializeAdminClinics, CLINICS } from "@/lib/adminData";
 import type { Clinic } from "@/lib/types";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 
@@ -15,17 +14,38 @@ function ClinicsPageContent() {
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
 
   useEffect(() => {
-    // Initialize with default clinics if empty
-    initializeAdminClinics(CLINICS);
-    const adminClinics = getAdminClinics();
-    setClinics(adminClinics);
-    setLoading(false);
+    // Fetch clinics from API
+    const fetchClinics = async () => {
+      try {
+        const response = await fetch("/api/clinics");
+        const data = await response.json();
+        setClinics(data);
+      } catch (error) {
+        console.error("Failed to fetch clinics:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchClinics();
   }, []);
 
-  const handleDelete = (id: string) => {
-    deleteClinic(id);
-    setClinics(clinics.filter(c => c.id !== id));
-    setDeleteConfirm(null);
+  const handleDelete = async (id: string) => {
+    try {
+      const response = await fetch(`/api/clinics/${id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        setClinics(clinics.filter(c => c.id !== id));
+        setDeleteConfirm(null);
+      } else {
+        alert("Failed to delete clinic");
+      }
+    } catch (error) {
+      console.error("Delete failed:", error);
+      alert("Error deleting clinic");
+    }
   };
 
   // Filter and search
