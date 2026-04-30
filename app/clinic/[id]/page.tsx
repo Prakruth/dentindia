@@ -54,7 +54,7 @@ export default async function ClinicPage({ params }: PageProps) {
                 <h1 className="font-display text-2xl sm:text-3xl font-bold">{clinic.name}</h1>
                 <span className="flex items-center gap-1 bg-white/20 rounded-full px-2.5 py-1 text-xs font-medium">
                   <Star size={11} className="fill-amber-300 text-amber-300" />
-                  {clinic.rating} · {clinic.reviewCount} reviews
+                  {clinic.rating} · {clinic.review_count} reviews
                 </span>
               </div>
               <p className="text-teal-100 font-medium">{clinic.doctor}</p>
