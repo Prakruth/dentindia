@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { MapPin, Phone, Mail, Clock, Star, Globe, ArrowLeft, MessageCircle, Award } from "lucide-react";
-import { CLINICS, getClinic } from "@/lib/data";
+import { getClinic, getAllClinics } from "@/lib/data";
 import ServiceCard from "@/components/ServiceCard";
 
 interface PageProps {
@@ -9,11 +9,12 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  return CLINICS.map((c) => ({ id: c.id }));
+  const clinics = await getAllClinics();
+  return clinics.map((c) => ({ id: c.id }));
 }
 
 export async function generateMetadata({ params }: PageProps) {
-  const clinic = getClinic(params.id);
+  const clinic = await getClinic(params.id);
   if (!clinic) return {};
   return {
     title: `${clinic.name} — ${clinic.doctor} | DentIndia`,
@@ -21,8 +22,8 @@ export async function generateMetadata({ params }: PageProps) {
   };
 }
 
-export default function ClinicPage({ params }: PageProps) {
-  const clinic = getClinic(params.id);
+export default async function ClinicPage({ params }: PageProps) {
+  const clinic = await getClinic(params.id);
   if (!clinic) notFound();
 
   const whatsappNumber = clinic.phone.replace(/\D/g, "");
