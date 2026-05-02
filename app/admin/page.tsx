@@ -111,15 +111,18 @@ function AdminDashboardContent() {
             <ArrowRight size={20} className="text-stone-400 group-hover:text-blue-600 transition" />
           </div>
         </Link>
-        <div className="bg-white border-2 border-stone-200 rounded-2xl p-6 opacity-50 cursor-not-allowed">
+        <Link
+          href="/admin/bookings"
+          className="bg-white border-2 border-stone-200 rounded-2xl p-6 hover:border-blue-300 hover:shadow-lg transition group"
+        >
           <div className="flex items-start justify-between">
             <div>
               <h3 className="font-semibold text-stone-900 mb-2">View Bookings</h3>
-              <p className="text-sm text-stone-600">Coming soon...</p>
+              <p className="text-sm text-stone-600">View and manage appointment bookings</p>
             </div>
-            <span className="px-2.5 py-1 bg-stone-100 text-stone-600 text-xs font-medium rounded">Soon</span>
+            <ArrowRight size={20} className="text-stone-400 group-hover:text-blue-600 transition" />
           </div>
-        </div>
+        </Link>
       </div>
 
       {/* Recent Clinics */}

@@ -7,3 +7,7 @@ node_modules/
 dist/
 build/
 .vercel
+
+# Private Claude Code setup (personal, not shared)
+.claude/
+memory/

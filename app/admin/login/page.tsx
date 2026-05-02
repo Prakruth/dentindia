@@ -16,7 +16,6 @@ export default function LoginPage() {
     setError("");
     setLoading(true);
 
-    // Simple password check (use env variable in production)
     const correctPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || "admin123";
 
     if (password === correctPassword) {

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
-import { Building2, LayoutDashboard, LogOut, Menu, X } from "lucide-react";
+import { Building2, LayoutDashboard, LogOut, Menu, X, Calendar } from "lucide-react";
 import { useState } from "react";
 import { clearAdminAuth } from "@/lib/adminData";
 
@@ -21,6 +21,7 @@ export default function AdminSidebar() {
   const navItems = [
     { label: 'Dashboard', icon: LayoutDashboard, href: '/admin' },
     { label: 'Clinics', icon: Building2, href: '/admin/clinics' },
+    { label: 'Bookings', icon: Calendar, href: '/admin/bookings' },
   ];
 
   return (
