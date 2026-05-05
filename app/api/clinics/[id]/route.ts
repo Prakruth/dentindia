@@ -44,8 +44,23 @@ export async function PATCH(
   const { data: clinic, error } = await supabase
     .from('clinics')
     .update({
-      ...clinicData,
-      review_count: clinicData.reviewCount,
+      name: clinicData.name,
+      doctor: clinicData.doctor,
+      qualification: clinicData.qualification,
+      city: clinicData.city,
+      area: clinicData.area,
+      address: clinicData.address,
+      phone: clinicData.phone,
+      email: clinicData.email,
+      rating: clinicData.rating,
+      review_count: clinicData.review_count,
+      experience: clinicData.experience,
+      tagline: clinicData.tagline,
+      about: clinicData.about,
+      languages: clinicData.languages,
+      timings: clinicData.timings,
+      specializations: clinicData.specializations,
+      image: clinicData.image,
       updated_at: new Date().toISOString(),
     })
     .eq('id', id)

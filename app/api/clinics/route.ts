@@ -46,8 +46,24 @@ export async function POST(request: NextRequest) {
   const { data: clinic, error: clinicError } = await supabase
     .from('clinics')
     .insert([{
-      ...clinicData,
-      review_count: clinicData.reviewCount || 0,
+      id: clinicData.id,
+      name: clinicData.name,
+      doctor: clinicData.doctor,
+      qualification: clinicData.qualification,
+      city: clinicData.city,
+      area: clinicData.area,
+      address: clinicData.address,
+      phone: clinicData.phone,
+      email: clinicData.email,
+      rating: clinicData.rating || 4.5,
+      review_count: clinicData.review_count || 0,
+      experience: clinicData.experience || 0,
+      tagline: clinicData.tagline || '',
+      about: clinicData.about || '',
+      languages: clinicData.languages || [],
+      timings: clinicData.timings || '',
+      specializations: clinicData.specializations || [],
+      image: clinicData.image || '🦷',
     }])
     .select()
     .single()
