@@ -191,15 +191,28 @@ export default function ClinicForm({ initialClinic, onSubmit, isLoading = false 
             </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-stone-700 mb-2">Qualification</label>
-            <input
-              type="text"
-              value={formData.qualification}
-              onChange={(e) => setFormData({ ...formData, qualification: e.target.value })}
-              placeholder="BDS, MDS..."
-              className="w-full px-4 py-2.5 border border-stone-200 rounded-lg focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition"
-            />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-stone-700 mb-2">Qualification</label>
+              <input
+                type="text"
+                value={formData.qualification}
+                onChange={(e) => setFormData({ ...formData, qualification: e.target.value })}
+                placeholder="BDS, MDS..."
+                className="w-full px-4 py-2.5 border border-stone-200 rounded-lg focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-stone-700 mb-2">Experience (Years)</label>
+              <input
+                type="number"
+                value={formData.experience}
+                onChange={(e) => setFormData({ ...formData, experience: parseInt(e.target.value) || 0 })}
+                placeholder="0"
+                min="0"
+                className="w-full px-4 py-2.5 border border-stone-200 rounded-lg focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition"
+              />
+            </div>
           </div>
         </div>
 
