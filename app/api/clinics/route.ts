@@ -81,15 +81,21 @@ export async function POST(request: NextRequest) {
         .from('services')
         .insert([{
           clinic_id: clinic.id,
-          ...serviceData,
-          price_from: serviceData.priceFrom,
-          price_to: serviceData.priceTo,
-          review_count: serviceData.reviewCount,
+          name: serviceData.name,
+          description: serviceData.description || '',
+          duration: serviceData.duration || '',
+          price_from: serviceData.price_from || 0,
+          price_to: serviceData.price_to,
+          rating: serviceData.rating || 4.5,
+          review_count: serviceData.review_count || 0,
         }])
         .select()
         .single()
 
-      if (svcError) continue
+      if (svcError) {
+        console.error('Service insert error:', svcError)
+        continue
+      }
 
       // Insert variants
       if (variants && Array.isArray(variants)) {
@@ -97,9 +103,11 @@ export async function POST(request: NextRequest) {
           .from('service_variants')
           .insert(variants.map(v => ({
             service_id: svc.id,
-            ...v,
-            price_min: v.priceMin,
-            price_max: v.priceMax,
+            type: v.type,
+            price: v.price,
+            price_min: v.price_min,
+            price_max: v.price_max,
+            duration: v.duration,
           })))
       }
     }
