@@ -39,11 +39,6 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const supabase = await createClient()
 
-  const { data: { user }, error: authError } = await supabase.auth.getUser()
-  if (authError || !user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-
   const body = await request.json()
   const { services, ...clinicData } = body
 
