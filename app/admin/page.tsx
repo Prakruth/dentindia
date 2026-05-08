@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Building2, MapPin, Stethoscope, ArrowRight } from "lucide-react";
 import type { Clinic } from "@/lib/types";
-import ProtectedRoute from "@/components/admin/ProtectedRoute";
-
 function AdminDashboardContent() {
   const [stats, setStats] = useState({ totalClinics: 0, totalCities: 0, totalServices: 0 });
   const [recentClinics, setRecentClinics] = useState<Clinic[]>([]);
@@ -157,9 +155,5 @@ function AdminDashboardContent() {
 }
 
 export default function AdminDashboard() {
-  return (
-    <ProtectedRoute>
-      <AdminDashboardContent />
-    </ProtectedRoute>
-  );
+  return <AdminDashboardContent />;
 }

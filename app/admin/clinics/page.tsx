@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Building2, Plus, Pencil, Trash2, Search, MapPin, Users } from "lucide-react";
 import type { Clinic } from "@/lib/types";
-import ProtectedRoute from "@/components/admin/ProtectedRoute";
-
 function ClinicsPageContent() {
   const [clinics, setClinics] = useState<Clinic[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -239,9 +237,5 @@ function ClinicsPageContent() {
 }
 
 export default function ClinicsPage() {
-  return (
-    <ProtectedRoute>
-      <ClinicsPageContent />
-    </ProtectedRoute>
-  );
+  return <ClinicsPageContent />;
 }

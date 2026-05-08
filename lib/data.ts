@@ -41,6 +41,7 @@ export async function getAllClinics(): Promise<Clinic[]> {
         service_variants(id, service_id, type, price, price_min, price_max, duration, created_at)
       )
     `)
+    .eq('is_active', true)
 
   if (error || !clinics) return []
 

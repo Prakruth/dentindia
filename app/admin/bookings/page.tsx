@@ -3,8 +3,6 @@
 import { useEffect, useState } from 'react';
 import { Calendar, Clock, User, Mail, Phone, MapPin, Loader, AlertCircle, CheckCircle, Clock3 } from 'lucide-react';
 import type { Booking } from '@/lib/types';
-import ProtectedRoute from '@/components/admin/ProtectedRoute';
-
 function BookingsContent() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
@@ -18,13 +16,11 @@ function BookingsContent() {
         setError(null);
         const response = await fetch('/api/admin/bookings');
 
+        const json = await response.json();
         if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || 'Failed to fetch bookings');
+          throw new Error(json.error || 'Failed to fetch bookings');
         }
-
-        const data: Booking[] = await response.json();
-        setBookings(data);
+        setBookings(Array.isArray(json.data) ? json.data : []);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
       } finally {
@@ -238,9 +234,5 @@ function BookingsContent() {
 }
 
 export default function BookingsPage() {
-  return (
-    <ProtectedRoute>
-      <BookingsContent />
-    </ProtectedRoute>
-  );
+  return <BookingsContent />;
 }

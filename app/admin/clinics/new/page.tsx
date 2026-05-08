@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import ClinicForm from "@/components/admin/ClinicForm";
-import ProtectedRoute from "@/components/admin/ProtectedRoute";
 import type { Clinic } from "@/lib/types";
 
 function AddClinicPageContent() {
@@ -42,9 +41,5 @@ function AddClinicPageContent() {
 }
 
 export default function AddClinicPage() {
-  return (
-    <ProtectedRoute>
-      <AddClinicPageContent />
-    </ProtectedRoute>
-  );
+  return <AddClinicPageContent />;
 }

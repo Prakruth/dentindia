@@ -4,21 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Plus, Trash2, X } from "lucide-react";
 import type { Clinic, Service, ServiceVariant } from "@/lib/types";
-
-const AVAILABLE_SERVICES = [
-  "Consultation",
-  "Root Canal Treatment",
-  "Extraction",
-  "Dental Implants",
-  "Cleaning",
-  "Braces & Aligners",
-  "Braces",
-  "Teeth Whitening",
-  "Crown & Bridge",
-  "Scaling",
-  "Fillings",
-  "Dentures"
-];
+import { AVAILABLE_SERVICES } from "@/lib/constants";
 
 interface ClinicFormProps {
   initialClinic?: Clinic;
@@ -49,6 +35,7 @@ export default function ClinicForm({ initialClinic, onSubmit, isLoading = false 
       services: [],
       specializations: [],
       image: "🦷",
+      is_active: true,
     }
   );
 
@@ -213,6 +200,37 @@ export default function ClinicForm({ initialClinic, onSubmit, isLoading = false 
                 className="w-full px-4 py-2.5 border border-stone-200 rounded-lg focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition"
               />
             </div>
+          </div>
+
+          {/* Active / Inactive toggle */}
+          <div className="flex items-center justify-between p-4 border border-stone-200 rounded-lg bg-stone-50">
+            <div>
+              <label htmlFor="is_active_toggle" className="block text-sm font-medium text-stone-700">
+                Clinic is Active
+              </label>
+              <p className="text-xs text-stone-500 mt-0.5">
+                {formData.is_active
+                  ? "Clinic is visible in public listings"
+                  : "Clinic is hidden from public listings"}
+              </p>
+            </div>
+            <button
+              type="button"
+              id="is_active_toggle"
+              role="switch"
+              aria-checked={formData.is_active ?? true}
+              onClick={() => setFormData({ ...formData, is_active: !(formData.is_active ?? true) })}
+              className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 ${
+                (formData.is_active ?? true) ? "bg-teal-600" : "bg-stone-300"
+              }`}
+            >
+              <span
+                aria-hidden="true"
+                className={`pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform transition-transform ${
+                  (formData.is_active ?? true) ? "translate-x-5" : "translate-x-0"
+                }`}
+              />
+            </button>
           </div>
         </div>
 

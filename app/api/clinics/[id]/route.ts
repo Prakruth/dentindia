@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { getAuthenticatedUser, isSuperAdmin } from '@/lib/auth-helpers'
 
 export async function GET(
   request: NextRequest,
@@ -34,6 +35,22 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  // Only super_admin can update clinics
+  const { user, clinicUser, error: authError } = await getAuthenticatedUser()
+
+  if (authError === 'Not authenticated' || !user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  if (authError) {
+    console.error('[clinics/[id] PATCH] auth error', authError)
+    return NextResponse.json({ error: 'Failed to verify permissions' }, { status: 500 })
+  }
+
+  if (!isSuperAdmin(clinicUser)) {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+  }
+
   const supabase = await createClient()
 
   const id = params.id
@@ -122,6 +139,22 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  // Only super_admin can delete clinics
+  const { user, clinicUser, error: authError } = await getAuthenticatedUser()
+
+  if (authError === 'Not authenticated' || !user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  if (authError) {
+    console.error('[clinics/[id] DELETE] auth error', authError)
+    return NextResponse.json({ error: 'Failed to verify permissions' }, { status: 500 })
+  }
+
+  if (!isSuperAdmin(clinicUser)) {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+  }
+
   const supabase = await createClient()
 
   const id = params.id

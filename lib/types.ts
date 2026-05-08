@@ -52,8 +52,20 @@ export interface Clinic {
   services: Service[]
   specializations: string[]
   image: string
+  is_active?: boolean
   created_at?: string
   updated_at?: string
+}
+
+export interface ClinicUser {
+  id: string
+  user_id: string
+  clinic_id: string | null
+  role: 'super_admin' | 'clinic_admin' | 'clinic_staff'
+  status: 'pending' | 'approved' | 'rejected'
+  created_at: string
+  clinic_name?: string
+  email?: string
 }
 
 export interface ClinicServiceMatch {

@@ -1,19 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
-import { Building2, LayoutDashboard, LogOut, Menu, X, Calendar } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Building2, LayoutDashboard, LogOut, Menu, X, Calendar, Users } from "lucide-react";
 import { useState } from "react";
-import { clearAdminAuth } from "@/lib/adminData";
 
 export default function AdminSidebar() {
-  const router = useRouter();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const handleLogout = () => {
-    clearAdminAuth();
-    router.push('/admin/login');
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } catch {
+      // proceed to redirect even if request fails
+    }
+    window.location.href = '/login';
   };
 
   const isActive = (path: string) => pathname === path;
@@ -22,6 +24,7 @@ export default function AdminSidebar() {
     { label: 'Dashboard', icon: LayoutDashboard, href: '/admin' },
     { label: 'Clinics', icon: Building2, href: '/admin/clinics' },
     { label: 'Bookings', icon: Calendar, href: '/admin/bookings' },
+    { label: 'Users', icon: Users, href: '/admin/users' },
   ];
 
   return (

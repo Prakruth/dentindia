@@ -1,11 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Menu, X, Stethoscope } from "lucide-react";
 
+const HIDDEN_PATHS = ['/login', '/register']
+
 export default function Navbar() {
   const [open, setOpen] = useState<boolean>(false);
+  const pathname = usePathname();
+
+  if (HIDDEN_PATHS.includes(pathname)) return null;
 
   return (
     <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-stone-200">
