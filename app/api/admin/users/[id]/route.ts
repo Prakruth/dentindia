@@ -60,7 +60,12 @@ export async function PATCH(
   const newStatus = status as AllowedStatus
 
   // 3. Verify the clinic_users record exists
-  const adminClient = createAdminClient()
+  let adminClient: ReturnType<typeof createAdminClient>
+  try {
+    adminClient = createAdminClient()
+  } catch {
+    return NextResponse.json({ error: 'Server configuration error: missing service role key' }, { status: 500 })
+  }
 
   const { data: targetUser, error: fetchError } = await adminClient
     .from('clinic_users')
