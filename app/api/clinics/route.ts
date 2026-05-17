@@ -81,6 +81,7 @@ export async function POST(request: NextRequest) {
       timings: clinicData.timings || '',
       specializations: clinicData.specializations || [],
       image: clinicData.image || '🦷',
+      is_active: clinicData.is_active ?? true,
     }])
     .select()
     .single()
