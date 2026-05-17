@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Building2, Plus, Pencil, Trash2, Search, MapPin, Users } from "lucide-react";
+import { Building2, Plus, Pencil, Trash2, Search, MapPin, Users, CheckCircle, XCircle } from "lucide-react";
 import type { Clinic } from "@/lib/types";
 function ClinicsPageContent() {
   const [clinics, setClinics] = useState<Clinic[]>([]);
@@ -141,6 +141,17 @@ function ClinicsPageContent() {
                       <Users size={12} />
                       {clinic.services.length} services
                     </span>
+                    {clinic.is_active ? (
+                      <span className="inline-flex items-center gap-1 px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">
+                        <CheckCircle size={12} />
+                        Active
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1 px-3 py-1 bg-red-100 text-red-600 text-xs font-medium rounded-full">
+                        <XCircle size={12} />
+                        Inactive
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
