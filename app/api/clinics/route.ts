@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
   let query = supabase.from('clinics').select(`
     id, name, doctor, qualification, city, area, address, phone, email,
     rating, review_count, experience, tagline, about, languages, timings,
-    specializations, image, created_at, updated_at,
+    specializations, image, is_active, created_at, updated_at,
     services(
       id, clinic_id, name, description, duration, price_from, price_to,
       rating, review_count, created_at,

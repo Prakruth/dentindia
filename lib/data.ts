@@ -125,6 +125,7 @@ function mapClinicFromDB(dbClinic: any): Clinic {
     timings: dbClinic.timings,
     specializations: dbClinic.specializations,
     image: dbClinic.image,
+    is_active: dbClinic.is_active,
     services: (dbClinic.services || []).map((s: any) => ({
       id: s.id,
       clinic_id: s.clinic_id,
