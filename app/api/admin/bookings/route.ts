@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getAuthenticatedUser, isSuperAdmin } from '@/lib/auth-helpers'
 import { createAdminClient } from '@/lib/supabase/admin'
 
+// Mark this route as dynamic (not statically generated)
+export const dynamic = 'force-dynamic'
+
 export async function GET(_request: NextRequest) {
   try {
     // Only super_admin can view all bookings
