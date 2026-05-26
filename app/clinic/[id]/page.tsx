@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { MapPin, Phone, Mail, Clock, Star, Globe, ArrowLeft, MessageCircle, Award } from "lucide-react";
+import { MapPin, Clock, Star, Globe, ArrowLeft, Award } from "lucide-react";
 import { getClinic, getAllClinics } from "@/lib/data";
 import ServiceCard from "@/components/ServiceCard";
+import ClinicPageClient from "@/components/ClinicPageClient";
+import type { Metadata } from "next";
 
 interface PageProps {
   params: { id: string };
@@ -14,12 +16,41 @@ export async function generateStaticParams() {
   return [];
 }
 
-export async function generateMetadata({ params }: PageProps) {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const clinic = await getClinic(params.id);
   if (!clinic) return {};
+
+  const serviceNames = clinic.services.map((s) => s.name).join(", ");
+  const title = `${clinic.name} — ${clinic.doctor} | Dental Clinic in ${clinic.city}`;
+  const description = `${clinic.doctor} at ${clinic.name} in ${clinic.area}, ${clinic.city}. ${clinic.qualification}. ${clinic.experience} years experience. Services: ${serviceNames}. Rated ${clinic.rating}/5. Book appointment online.`;
+
   return {
-    title: `${clinic.name} — ${clinic.doctor} | DentIndia`,
-    description: clinic.about,
+    title,
+    description,
+    keywords: [
+      `${clinic.name}`,
+      `${clinic.doctor}`,
+      `dental clinic ${clinic.city}`,
+      `dentist ${clinic.area} ${clinic.city}`,
+      `${clinic.specializations.join(", ")}`,
+      `dental appointment ${clinic.city}`,
+      ...clinic.services.map((s) => `${s.name} ${clinic.city}`),
+    ],
+    alternates: {
+      canonical: `https://dentobook.in/clinic/${params.id}`,
+    },
+    openGraph: {
+      title,
+      description,
+      url: `https://dentobook.in/clinic/${params.id}`,
+      type: "website",
+      siteName: "Dentobook",
+    },
+    twitter: {
+      card: "summary",
+      title,
+      description,
+    },
   };
 }
 
@@ -28,10 +59,59 @@ export default async function ClinicPage({ params }: PageProps) {
   if (!clinic) notFound();
 
   const whatsappNumber = clinic.phone.replace(/\D/g, "");
-  const whatsappLink = `https://wa.me/${whatsappNumber}?text=Hi%20${encodeURIComponent(clinic.doctor)}%2C%20I%20found%20your%20clinic%20on%20DentIndia%20and%20would%20like%20to%20book%20an%20appointment.`;
+  const whatsappLink = `https://wa.me/${whatsappNumber}?text=Hi%20${encodeURIComponent(clinic.doctor)}%2C%20I%20found%20your%20clinic%20on%20Dentobook%20and%20would%20like%20to%20book%20an%20appointment.`;
+
+  const clinicSchema = {
+    "@context": "https://schema.org",
+    "@type": "Dentist",
+    name: clinic.name,
+    description: clinic.about,
+    url: `https://dentobook.in/clinic/${clinic.id}`,
+    telephone: clinic.phone,
+    email: clinic.email,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: clinic.address,
+      addressLocality: clinic.area,
+      addressRegion: clinic.city,
+      addressCountry: "IN",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+    },
+    openingHours: clinic.timings,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: clinic.rating,
+      reviewCount: clinic.review_count,
+      bestRating: 5,
+      worstRating: 1,
+    },
+    medicalSpecialty: clinic.specializations,
+    hasMap: `https://www.google.com/maps/search/${encodeURIComponent(clinic.address)}`,
+    knowsLanguage: clinic.languages,
+    priceRange: "₹₹",
+    employee: {
+      "@type": "Physician",
+      name: clinic.doctor,
+      description: `${clinic.qualification}, ${clinic.experience} years experience`,
+      medicalSpecialty: clinic.specializations,
+    },
+    availableService: clinic.services.map((s) => ({
+      "@type": "MedicalProcedure",
+      name: s.name,
+      description: s.description,
+      procedureType: "Dental",
+    })),
+  };
 
   return (
     <div className="min-h-screen bg-stone-50">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(clinicSchema) }}
+      />
+
       {/* Hero banner */}
       <div className="bg-gradient-to-br from-teal-700 via-teal-600 to-teal-500 text-white px-4 pt-8 pb-20">
         <div className="max-w-4xl mx-auto">
@@ -128,37 +208,15 @@ export default async function ClinicPage({ params }: PageProps) {
         </section>
 
         {/* Contact CTA */}
-        <section className="bg-gradient-to-br from-teal-700 to-teal-800 rounded-2xl p-6 sm:p-8 text-white">
-          <h2 className="font-display text-xl font-bold mb-1">Book an Appointment</h2>
-          <p className="text-teal-100 text-sm mb-6">
-            Call or WhatsApp {clinic.doctor} directly to schedule your visit.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <a
-              href={`tel:${clinic.phone}`}
-              className="flex items-center justify-center gap-2 bg-white text-teal-700 font-semibold px-5 py-3 rounded-full hover:bg-teal-50 transition text-sm"
-            >
-              <Phone size={16} />
-              {clinic.phone}
-            </a>
-            <a
-              href={whatsappLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 bg-green-500 text-white font-semibold px-5 py-3 rounded-full hover:bg-green-600 transition text-sm"
-            >
-              <MessageCircle size={16} />
-              WhatsApp
-            </a>
-            <a
-              href={`mailto:${clinic.email}`}
-              className="flex items-center justify-center gap-2 bg-white/15 border border-white/30 text-white font-medium px-5 py-3 rounded-full hover:bg-white/25 transition text-sm"
-            >
-              <Mail size={16} />
-              Email
-            </a>
-          </div>
-        </section>
+        <ClinicPageClient
+          clinicId={clinic.id}
+          clinicName={clinic.name}
+          city={clinic.city}
+          phone={clinic.phone}
+          email={clinic.email}
+          whatsappLink={whatsappLink}
+          doctor={clinic.doctor}
+        />
       </div>
     </div>
   );

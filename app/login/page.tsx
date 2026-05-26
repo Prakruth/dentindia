@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Building2, Eye, EyeOff } from 'lucide-react'
+import { trackLoginAttempt, trackLoginSuccess, trackLoginFailed } from '@/lib/analytics'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -16,6 +17,9 @@ export default function LoginPage() {
     setError(null)
     setLoading(true)
 
+    // Track login attempt
+    trackLoginAttempt('email')
+
     try {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
@@ -26,6 +30,9 @@ export default function LoginPage() {
       const data = await res.json()
 
       if (res.ok) {
+        // Track successful login
+        trackLoginSuccess(data.user?.role || 'unknown')
+
         // Navigate to the role-appropriate destination, honouring ?redirect= if present
         const params = new URLSearchParams(window.location.search)
         const redirectTo = params.get('redirect') || data.redirect
@@ -33,15 +40,20 @@ export default function LoginPage() {
         return
       }
 
+      // Track failed login
       if (res.status === 401) {
         setError('Invalid email or password')
+        trackLoginFailed('invalid_credentials')
       } else if (res.status === 403) {
         setError(data.error ?? 'Access denied')
+        trackLoginFailed('access_denied')
       } else {
         setError('Something went wrong. Please try again.')
+        trackLoginFailed('server_error')
       }
     } catch {
       setError('Something went wrong. Please try again.')
+      trackLoginFailed('network_error')
     } finally {
       setLoading(false)
     }

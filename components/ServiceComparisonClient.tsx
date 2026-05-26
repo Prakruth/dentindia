@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, Star, MapPin, Phone, MessageCircle } from 'lucide-react'
 import type { ClinicServiceMatch } from '@/lib/types'
+import { trackComparisonViewed, trackFilterApplied, trackClinicCardClick, trackBookingInitiated } from '@/lib/analytics'
 
 interface ServiceComparisonClientProps {
   serviceName: string
@@ -19,6 +20,12 @@ export default function ServiceComparisonClient({
   const [sortBy, setSortBy] = useState<'recommended' | 'price' | 'rating' | 'distance'>('recommended')
   const [minRating, setMinRating] = useState(0)
   const [maxPrice, setMaxPrice] = useState(50000)
+
+  // Track comparison page view
+  useEffect(() => {
+    const clinicIds = initialComparisons.map(c => c.clinic.id);
+    trackComparisonViewed(clinicIds, serviceName);
+  }, [initialComparisons, serviceName]);
 
   const comparisons = useMemo(() => {
     let results = [...initialComparisons]
@@ -79,7 +86,11 @@ export default function ServiceComparisonClient({
               <label className="text-sm font-semibold text-stone-700 mb-2 block">Sort By</label>
               <select
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as any)}
+                onChange={(e) => {
+                  const value = e.target.value as any;
+                  setSortBy(value);
+                  trackFilterApplied('sort', value);
+                }}
                 className="w-full px-3 py-2 border border-stone-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
               >
                 <option value="recommended">Recommended</option>
@@ -96,7 +107,11 @@ export default function ServiceComparisonClient({
                 max="5"
                 step="0.5"
                 value={minRating}
-                onChange={(e) => setMinRating(parseFloat(e.target.value))}
+                onChange={(e) => {
+                  const value = parseFloat(e.target.value);
+                  setMinRating(value);
+                  trackFilterApplied('min_rating', value.toString());
+                }}
                 className="w-full"
               />
               <span className="text-xs text-stone-600">{minRating}+ stars</span>
@@ -109,7 +124,11 @@ export default function ServiceComparisonClient({
                 max="100000"
                 step="1000"
                 value={maxPrice}
-                onChange={(e) => setMaxPrice(parseInt(e.target.value))}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value);
+                  setMaxPrice(value);
+                  trackFilterApplied('max_price', value.toString());
+                }}
                 className="w-full"
               />
               <span className="text-xs text-stone-600">₹{maxPrice.toLocaleString()}</span>
@@ -120,13 +139,16 @@ export default function ServiceComparisonClient({
         {/* Results */}
         {comparisons.length > 0 ? (
           <div className="space-y-4">
-            {comparisons.map((match) => (
+            {comparisons.map((match, index) => (
               <div
                 key={`${match.clinic.id}-${match.service.id}`}
                 className="block"
               >
                 <Link
                   href={`/clinic/${match.clinic.id}`}
+                  onClick={() => {
+                    trackClinicCardClick(match.clinic.id, match.clinic.name, index + 1, 'service_comparison');
+                  }}
                   className="block"
                 >
                   <div className="bg-white rounded-lg border border-stone-200 p-6 hover:shadow-lg hover:border-blue-400 transition">
@@ -166,7 +188,10 @@ export default function ServiceComparisonClient({
                     <div className="text-right">
                       <Link
                         href={`/booking?clinic=${match.clinic.id}&service=${encodeURIComponent(match.service.name)}`}
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          trackBookingInitiated(match.clinic.id, match.service.name, match.service.price_from);
+                        }}
                         className="inline-block px-3 py-1 bg-blue-600 text-white rounded text-xs font-semibold hover:bg-blue-700 transition"
                       >
                         Book Now

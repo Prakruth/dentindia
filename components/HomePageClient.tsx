@@ -3,6 +3,7 @@
 import { useState, useMemo, useRef, useEffect } from "react";
 import { Search, Sparkles, ChevronDown } from "lucide-react";
 import Link from "next/link";
+import { trackSearchInitiated, trackSearchResults, trackFilterApplied } from "@/lib/analytics";
 
 interface HomePageClientProps {
   services: string[];
@@ -19,9 +20,16 @@ export default function HomePageClient({ services: allServices, cities: CITIES }
 
   const filteredServices = useMemo(() => {
     if (!searchQuery.trim()) return allServices;
-    return allServices.filter((service) =>
+    const filtered = allServices.filter((service) =>
       service.toLowerCase().includes(searchQuery.toLowerCase())
     );
+
+    // Track search results
+    if (searchQuery.trim()) {
+      trackSearchResults(searchQuery, filtered.length);
+    }
+
+    return filtered;
   }, [searchQuery, allServices]);
 
   useEffect(() => {
@@ -69,6 +77,8 @@ export default function HomePageClient({ services: allServices, cities: CITIES }
   };
 
   const handleSelectService = (service: string) => {
+    // Track search initiated
+    trackSearchInitiated(service, selectedCity !== "All Cities" ? selectedCity : undefined);
     window.location.href = `/services/${encodeURIComponent(service)}?city=${selectedCity}`;
   };
 
@@ -145,7 +155,11 @@ export default function HomePageClient({ services: allServices, cities: CITIES }
               <button
                 key={city}
                 type="button"
-                onClick={() => setSelectedCity(city)}
+                onClick={() => {
+                  setSelectedCity(city);
+                  // Track filter applied
+                  trackFilterApplied('city', city);
+                }}
                 className={`text-sm px-3 py-1.5 rounded-full border transition-all ${
                   city === selectedCity
                     ? "bg-white text-blue-600 border-white"

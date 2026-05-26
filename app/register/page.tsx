@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Building2, Eye, EyeOff, CheckCircle2, ArrowLeft } from 'lucide-react'
+import { trackRegistrationStarted, trackRegistrationCompleted, trackError } from '@/lib/analytics'
 
 interface FormState {
   clinic_name: string
@@ -64,6 +65,16 @@ export default function RegisterPage() {
   const [serverError, setServerError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
+  const [tracked, setTracked] = useState(false)
+
+  // Track registration started when user begins typing
+  const handleChangeWithTracking = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!tracked) {
+      trackRegistrationStarted('clinic_staff')
+      setTracked(true)
+    }
+    handleChange(e)
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -81,6 +92,10 @@ export default function RegisterPage() {
     const errors = validateForm(form)
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors)
+      trackError('form_error', {
+        form_name: 'registration',
+        errors: Object.keys(errors).join(','),
+      })
       return
     }
 
@@ -101,21 +116,42 @@ export default function RegisterPage() {
       const data = await res.json()
 
       if (res.status === 201) {
+        trackRegistrationCompleted('clinic_staff', 'email')
         setSuccess(true)
         return
       }
 
       if (res.status === 409) {
         setServerError('An account with this email already exists')
+        trackError('form_error', {
+          form_name: 'registration',
+          error: 'email_already_exists',
+        })
       } else if (res.status === 400) {
         setServerError(data.error ?? 'Validation error. Please check your inputs.')
+        trackError('form_error', {
+          form_name: 'registration',
+          error: 'validation_error',
+        })
       } else if (res.status === 429) {
         setServerError(data.error ?? 'Too many attempts. Please try again later.')
+        trackError('form_error', {
+          form_name: 'registration',
+          error: 'rate_limit',
+        })
       } else {
         setServerError('Registration failed. Please try again.')
+        trackError('api_error', {
+          endpoint: '/api/auth/register',
+          error_code: res.status,
+        })
       }
     } catch {
       setServerError('Registration failed. Please try again.')
+      trackError('api_error', {
+        endpoint: '/api/auth/register',
+        error: 'network_error',
+      })
     } finally {
       setLoading(false)
     }
@@ -222,7 +258,7 @@ export default function RegisterPage() {
                 type="text"
                 autoComplete="organization"
                 value={form.clinic_name}
-                onChange={handleChange}
+                onChange={handleChangeWithTracking}
                 placeholder="e.g. Smile Dental Clinic"
                 disabled={loading}
                 required
@@ -256,7 +292,7 @@ export default function RegisterPage() {
                 type="email"
                 autoComplete="email"
                 value={form.email}
-                onChange={handleChange}
+                onChange={handleChangeWithTracking}
                 placeholder="you@example.com"
                 disabled={loading}
                 required
@@ -290,7 +326,7 @@ export default function RegisterPage() {
                 type="tel"
                 autoComplete="tel"
                 value={form.phone}
-                onChange={handleChange}
+                onChange={handleChangeWithTracking}
                 placeholder="e.g. 9876543210"
                 disabled={loading}
                 required
@@ -325,7 +361,7 @@ export default function RegisterPage() {
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="new-password"
                   value={form.password}
-                  onChange={handleChange}
+                  onChange={handleChangeWithTracking}
                   placeholder="Minimum 8 characters"
                   disabled={loading}
                   required
@@ -369,7 +405,7 @@ export default function RegisterPage() {
                   type={showConfirmPassword ? 'text' : 'password'}
                   autoComplete="new-password"
                   value={form.confirm_password}
-                  onChange={handleChange}
+                  onChange={handleChangeWithTracking}
                   placeholder="Repeat your password"
                   disabled={loading}
                   required
