@@ -1,0 +1,148 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - link "Dentobook" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img [ref=e6]
+        - generic [ref=e10]: Dentobook
+      - generic [ref=e11]:
+        - link "Home" [ref=e12] [cursor=pointer]:
+          - /url: /
+        - link "How It Works" [ref=e13] [cursor=pointer]:
+          - /url: "#how-it-works"
+        - link "List Your Clinic" [ref=e14] [cursor=pointer]:
+          - /url: mailto:onboard@dentobook.in
+  - main [ref=e15]:
+    - generic [ref=e16]:
+      - generic [ref=e18]:
+        - link "Back to all clinics" [ref=e19] [cursor=pointer]:
+          - /url: /
+          - img [ref=e20]
+          - text: Back to all clinics
+        - generic [ref=e22]:
+          - generic [ref=e23]: 👨‍⚕️
+          - generic [ref=e24]:
+            - heading "Carewell Dental Clinic" [level=1] [ref=e26]
+            - paragraph [ref=e27]: Dr. Varun
+            - paragraph [ref=e28]: BDS, MDS
+            - generic [ref=e29]:
+              - generic [ref=e30]: General Dentistry
+              - generic [ref=e31]: Orthodontics
+              - generic [ref=e32]: Restorative Dentistry
+          - generic [ref=e34]:
+            - generic [ref=e35]: "10"
+            - generic [ref=e36]: Years Exp.
+      - generic [ref=e37]:
+        - generic [ref=e40]:
+          - generic [ref=e41]:
+            - img [ref=e42]
+            - generic [ref=e45]:
+              - paragraph [ref=e46]: Address
+              - paragraph [ref=e47]: 20, Masjid Road, Uttarahalli Main Road, Subrahmanyapura Post, Bengaluru — 560061
+          - generic [ref=e48]:
+            - img [ref=e49]
+            - generic [ref=e52]:
+              - paragraph [ref=e53]: Timings
+              - paragraph [ref=e54]: "Mon–Sat: 10 AM – 8 PM, Sun: 10 AM – 2 PM"
+          - generic [ref=e55]:
+            - img [ref=e56]
+            - generic [ref=e59]:
+              - paragraph [ref=e60]: Languages
+              - paragraph [ref=e61]: Kannada, English, Hindi, Tamil
+        - separator
+        - generic [ref=e62]:
+          - generic [ref=e64]:
+            - img [ref=e65]
+            - text: About Dr. Varun
+          - paragraph [ref=e69]: Carewell Dental Clinic provides end-to-end dental care with experienced practitioners. Known for affordable pricing and patient-centric approach with modern diagnostic equipment.
+        - separator
+        - generic [ref=e70]:
+          - heading "Services & Pricing" [level=2] [ref=e71]
+          - paragraph [ref=e72]: All prices in INR · Subject to clinical assessment
+          - generic [ref=e73]:
+            - generic [ref=e75]:
+              - generic [ref=e76]:
+                - heading "Extraction" [level=3] [ref=e77]
+                - generic [ref=e78]:
+                  - img
+                  - text: 20–60 min
+              - paragraph [ref=e79]: Simple and surgical tooth extractions.
+              - generic [ref=e81]:
+                - img [ref=e82]
+                - text: "300"
+                - generic [ref=e85]: onwards
+            - generic [ref=e87]:
+              - generic [ref=e88]:
+                - heading "Cleaning" [level=3] [ref=e89]
+                - generic [ref=e90]:
+                  - img
+                  - text: 30–45 min
+              - paragraph [ref=e91]: Professional scaling and polishing.
+              - generic [ref=e93]:
+                - img [ref=e94]
+                - text: "800"
+                - generic [ref=e97]: onwards
+            - generic [ref=e99]:
+              - generic [ref=e100]:
+                - heading "Consultation" [level=3] [ref=e101]
+                - generic [ref=e102]:
+                  - img
+                  - text: 30 min
+              - paragraph [ref=e103]: Detailed examination with treatment recommendations.
+              - generic [ref=e105]:
+                - img [ref=e106]
+                - text: "300"
+                - generic [ref=e109]: onwards
+            - generic [ref=e111]:
+              - generic [ref=e112]:
+                - heading "Dental Implants" [level=3] [ref=e113]
+                - generic [ref=e114]:
+                  - img
+                  - text: 2–3 sittings
+              - paragraph [ref=e115]: Premium implants with ceramic crowns.
+              - generic [ref=e117]:
+                - img [ref=e118]
+                - text: 23,000
+                - generic [ref=e121]: onwards
+            - generic [ref=e123]:
+              - generic [ref=e124]:
+                - heading "Root Canal Treatment" [level=3] [ref=e125]
+                - generic [ref=e126]:
+                  - img
+                  - text: 60–90 min
+              - paragraph [ref=e127]: Advanced RCT techniques for complex cases.
+              - generic [ref=e129]:
+                - img [ref=e130]
+                - text: 3,500
+                - generic [ref=e133]: onwards
+            - generic [ref=e135]:
+              - generic [ref=e136]:
+                - heading "Braces" [level=3] [ref=e137]
+                - generic [ref=e138]:
+                  - img
+                  - text: 18–24 months
+              - paragraph [ref=e139]: Fixed braces and clear aligner therapy.
+              - generic [ref=e141]:
+                - img [ref=e142]
+                - text: 35,000
+                - generic [ref=e145]: onwards
+        - generic [ref=e146]:
+          - heading "Book an Appointment" [level=2] [ref=e147]
+          - paragraph [ref=e148]: Call or WhatsApp Dr. Varun directly to schedule your visit.
+          - generic [ref=e149]:
+            - link "+91 XXXXX XXXXX" [ref=e150] [cursor=pointer]:
+              - /url: tel:+91 XXXXX XXXXX
+              - img [ref=e151]
+              - text: +91 XXXXX XXXXX
+            - link "WhatsApp" [ref=e153] [cursor=pointer]:
+              - /url: https://wa.me/91?text=Hi%20Dr.%20Varun%20%2C%20I%20found%20your%20clinic%20on%20Dentobook%20and%20would%20like%20to%20book%20an%20appointment.
+              - img [ref=e154]
+              - text: WhatsApp
+            - link "Email" [ref=e156] [cursor=pointer]:
+              - /url: mailto:contact@carewelldental.in
+              - img [ref=e157]
+              - text: Email
+  - contentinfo [ref=e160]:
+    - paragraph [ref=e161]: Dentobook
+    - paragraph [ref=e162]: © 2026 · Connecting patients with trusted dental care across India
+  - alert [ref=e163]

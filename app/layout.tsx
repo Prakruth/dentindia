@@ -3,6 +3,7 @@ import { Playfair_Display, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import { cn } from "@/lib/utils";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -91,7 +92,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
   return (
-    <html lang="en-IN">
+    <html lang="en-IN" className={cn("font-sans")}>
       <body className={`${playfair.variable} ${dmSans.variable} font-sans antialiased bg-stone-50 text-stone-900`}>
         {gaId && <GoogleAnalytics measurementId={gaId} />}
         <Navbar />

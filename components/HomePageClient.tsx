@@ -1,9 +1,11 @@
 "use client";
 
 import { useState, useMemo, useRef, useEffect } from "react";
-import { Search, Sparkles, ChevronDown } from "lucide-react";
+import { Search, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { trackSearchInitiated, trackSearchResults, trackFilterApplied } from "@/lib/analytics";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 interface HomePageClientProps {
   services: string[];
@@ -84,19 +86,21 @@ export default function HomePageClient({ services: allServices, cities: CITIES }
 
   return (
     <div>
-      <section className="bg-gradient-to-b from-blue-700 via-blue-600 to-blue-500 text-white px-4 pt-16 pb-24 sm:pt-24">
+      {/* Hero */}
+      <section className="bg-gradient-to-b from-teal-700 via-teal-600 to-teal-500 text-white px-4 pt-16 pb-24 sm:pt-24">
         <div className="max-w-3xl mx-auto text-center">
-          <p className="text-blue-200 text-sm font-medium tracking-widest uppercase mb-3 animate-fade-up">
+          <p className="text-teal-200 text-sm font-medium tracking-widest uppercase mb-3 animate-fade-up">
             Service-First Comparison
           </p>
           <h1 className="font-display text-4xl sm:text-5xl font-bold leading-tight mb-4 animate-fade-up-delay-1">
             Find & Compare <br />
-            <span className="italic text-blue-100">Dental Services</span>
+            <span className="italic text-teal-100">Dental Services</span>
           </h1>
-          <p className="text-blue-100 text-base sm:text-lg mb-10 animate-fade-up-delay-2">
+          <p className="text-teal-100 text-base sm:text-lg mb-10 animate-fade-up-delay-2">
             Search for a service, compare prices across clinics, and book with the best option for your budget.
           </p>
 
+          {/* Search box */}
           <div className="max-w-lg mx-auto mb-6 animate-fade-up-delay-3 relative" ref={dropdownRef}>
             <div className="flex items-center gap-2 bg-white rounded-full px-4 py-3 shadow-xl">
               <Search size={18} className="text-stone-400 flex-shrink-0" />
@@ -122,6 +126,7 @@ export default function HomePageClient({ services: allServices, cities: CITIES }
                     searchInputRef.current?.focus();
                   }}
                   className="text-stone-400 hover:text-stone-600 transition"
+                  aria-label="Clear search"
                 >
                   ✕
                 </button>
@@ -136,7 +141,7 @@ export default function HomePageClient({ services: allServices, cities: CITIES }
                     onClick={() => handleSelectService(service)}
                     className={`w-full text-left px-4 py-3 transition-colors border-b border-stone-100 last:border-b-0 ${
                       index === selectedIndex
-                        ? "bg-blue-50 text-blue-600 font-medium"
+                        ? "bg-teal-50 text-teal-600 font-medium"
                         : "text-stone-700 hover:bg-stone-50"
                     }`}
                   >
@@ -150,6 +155,7 @@ export default function HomePageClient({ services: allServices, cities: CITIES }
             )}
           </div>
 
+          {/* City filter pills using shadcn Badge */}
           <div className="mt-6 flex gap-2 flex-wrap justify-center">
             {CITIES.map((city) => (
               <button
@@ -157,26 +163,31 @@ export default function HomePageClient({ services: allServices, cities: CITIES }
                 type="button"
                 onClick={() => {
                   setSelectedCity(city);
-                  // Track filter applied
                   trackFilterApplied('city', city);
                 }}
-                className={`text-sm px-3 py-1.5 rounded-full border transition-all ${
-                  city === selectedCity
-                    ? "bg-white text-blue-600 border-white"
-                    : "border-blue-300 text-blue-100 hover:border-white hover:text-white"
-                }`}
+                className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 rounded-full"
               >
-                {city}
+                <Badge
+                  variant={city === selectedCity ? "default" : "outline"}
+                  className={`cursor-pointer px-3 py-1 text-sm h-auto transition-all ${
+                    city === selectedCity
+                      ? "bg-white text-teal-700 border-white hover:bg-white/90"
+                      : "border-teal-300 text-teal-100 hover:border-white hover:text-white bg-transparent"
+                  }`}
+                >
+                  {city}
+                </Badge>
               </button>
             ))}
           </div>
         </div>
       </section>
 
+      {/* Services grid */}
       <section className="max-w-6xl mx-auto px-4 py-16">
         <div className="mb-8">
           <h2 className="font-display text-2xl sm:text-3xl font-bold text-stone-900 flex items-center gap-2 mb-2">
-            <Sparkles size={24} className="text-blue-500" />
+            <Sparkles size={24} className="text-teal-500" />
             {searchQuery.trim() ? "Search Results" : "Popular Services"}
           </h2>
           <p className="text-stone-500 text-sm">
@@ -193,17 +204,19 @@ export default function HomePageClient({ services: allServices, cities: CITIES }
                 href={`/services/${encodeURIComponent(service)}?city=${selectedCity}`}
                 className="group"
               >
-                <div className="bg-white border-2 border-stone-200 rounded-2xl p-6 text-center hover:border-blue-400 hover:shadow-lg transition-all cursor-pointer h-full flex flex-col items-center justify-center">
-                  <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">
-                    {getServiceEmoji(service)}
-                  </div>
-                  <h3 className="font-semibold text-stone-900 text-sm group-hover:text-blue-600 transition-colors line-clamp-2">
-                    {service}
-                  </h3>
-                  <p className="text-xs text-stone-500 mt-2 group-hover:text-blue-500">
-                    Compare prices →
-                  </p>
-                </div>
+                <Card className="border-2 border-stone-200 hover:border-teal-400 hover:shadow-lg transition-all cursor-pointer h-full ring-0">
+                  <CardContent className="flex flex-col items-center justify-center text-center py-6">
+                    <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">
+                      {getServiceEmoji(service)}
+                    </div>
+                    <h3 className="font-semibold text-stone-900 text-sm group-hover:text-teal-600 transition-colors line-clamp-2">
+                      {service}
+                    </h3>
+                    <p className="text-xs text-stone-500 mt-2 group-hover:text-teal-500">
+                      Compare prices →
+                    </p>
+                  </CardContent>
+                </Card>
               </Link>
             ))}
           </div>
@@ -215,25 +228,28 @@ export default function HomePageClient({ services: allServices, cities: CITIES }
         )}
       </section>
 
-      <section className="bg-stone-50 border-y border-stone-200 py-16 px-4">
+      {/* How It Works */}
+      <section id="how-it-works" className="bg-stone-50 border-y border-stone-200 py-16 px-4">
         <div className="max-w-4xl mx-auto">
           <h2 className="font-display text-2xl sm:text-3xl font-bold text-center text-stone-900 mb-2">
             How It Works
           </h2>
           <p className="text-stone-500 text-center text-sm mb-12">Find the perfect clinic for your service in 3 steps.</p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {[
               { step: "01", title: "Search Service", body: "Type the dental service you need — Root Canal, Whitening, etc." },
               { step: "02", title: "Compare Clinics", body: "See all clinics with pricing, ratings, and availability for that service." },
               { step: "03", title: "Book Now", body: "Choose the clinic that fits your budget and schedule your appointment." },
             ].map(({ step, title, body }) => (
-              <div key={step} className="text-center">
-                <div className="w-12 h-12 rounded-full border-2 border-blue-200 bg-blue-50 flex items-center justify-center mx-auto mb-4">
-                  <span className="text-blue-600 font-display font-bold text-sm">{step}</span>
-                </div>
-                <h3 className="font-semibold text-stone-800 mb-2">{title}</h3>
-                <p className="text-stone-500 text-sm leading-relaxed">{body}</p>
-              </div>
+              <Card key={step} className="text-center ring-0 border border-stone-200 shadow-none">
+                <CardContent className="pt-8 pb-6 flex flex-col items-center">
+                  <div className="w-12 h-12 rounded-full border-2 border-teal-200 bg-teal-50 flex items-center justify-center mb-4">
+                    <span className="text-teal-600 font-display font-bold text-sm">{step}</span>
+                  </div>
+                  <h3 className="font-semibold text-stone-800 mb-2">{title}</h3>
+                  <p className="text-stone-500 text-sm leading-relaxed">{body}</p>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>
@@ -242,7 +258,7 @@ export default function HomePageClient({ services: allServices, cities: CITIES }
       <section className="py-12 px-4 bg-white">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-stone-600 text-sm mb-4">
-            Or browse by <Link href="/clinic-directory" className="text-blue-600 font-semibold hover:underline">clinic directory →</Link>
+            Or browse by <Link href="/clinic-directory" className="text-teal-600 font-semibold hover:underline">clinic directory →</Link>
           </p>
         </div>
       </section>

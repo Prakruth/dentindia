@@ -1,0 +1,96 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - link "DentIndia" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img [ref=e6]
+        - generic [ref=e10]: DentIndia
+      - generic [ref=e11]:
+        - link "Home" [ref=e12] [cursor=pointer]:
+          - /url: /
+        - link "How It Works" [ref=e13] [cursor=pointer]:
+          - /url: "#how-it-works"
+        - link "List Your Clinic" [ref=e14] [cursor=pointer]:
+          - /url: mailto:onboard@dentindia.in
+  - main [ref=e15]:
+    - generic [ref=e16]:
+      - complementary [ref=e17]:
+        - link "Test Dental Clinic" [ref=e95] [cursor=pointer]:
+          - /url: /clinic-portal
+          - img [ref=e20]
+          - generic [ref=e24]: Test Dental Clinic
+        - navigation [ref=e25]:
+          - link "Dashboard" [ref=e26] [cursor=pointer]:
+            - /url: /clinic-portal
+            - img [ref=e27]
+            - text: Dashboard
+          - link "Bookings" [ref=e32] [cursor=pointer]:
+            - /url: /clinic-portal/bookings
+            - img [ref=e33]
+            - text: Bookings
+          - link "My Clinic" [ref=e35] [cursor=pointer]:
+            - /url: /clinic-portal/clinic
+            - img [ref=e36]
+            - text: My Clinic
+        - button "Logout" [ref=e40] [cursor=pointer]:
+          - img [ref=e41]
+          - text: Logout
+      - main [ref=e44]:
+        - generic [ref=e46]:
+          - generic [ref=e48]:
+            - generic [ref=e96]:
+              - heading "Welcome, Test Dental Clinic" [level=1] [ref=e97]
+              - paragraph [ref=e98]: •
+            - generic [ref=e99]:
+              - generic [ref=e100]: Active
+              - button "Set clinic inactive" [ref=e101] [cursor=pointer]:
+                - img [ref=e102]
+                - text: Set Inactive
+          - generic [ref=e59]:
+            - generic [ref=e106]:
+              - generic [ref=e107]:
+                - paragraph [ref=e108]: Total Bookings
+                - paragraph [ref=e109]: "0"
+              - img [ref=e110]
+            - generic [ref=e113]:
+              - generic [ref=e114]:
+                - paragraph [ref=e115]: Pending
+                - paragraph [ref=e116]: "0"
+              - img [ref=e117]
+            - generic [ref=e121]:
+              - generic [ref=e122]:
+                - paragraph [ref=e123]: Confirmed
+                - paragraph [ref=e124]: "0"
+              - img [ref=e125]
+            - generic [ref=e129]:
+              - generic [ref=e130]:
+                - paragraph [ref=e131]: Completed
+                - paragraph [ref=e132]: "0"
+              - img [ref=e133]
+          - generic [ref=e72]:
+            - link "Manage Bookings Review, confirm and complete appointments" [ref=e73] [cursor=pointer]:
+              - /url: /clinic-portal/bookings
+              - generic [ref=e74]:
+                - generic [ref=e75]:
+                  - heading "Manage Bookings" [level=3] [ref=e76]
+                  - paragraph [ref=e77]: Review, confirm and complete appointments
+                - img [ref=e78]
+            - link "Edit Clinic Details Update phone, timings, about and tagline" [ref=e80] [cursor=pointer]:
+              - /url: /clinic-portal/clinic
+              - generic [ref=e81]:
+                - generic [ref=e82]:
+                  - heading "Edit Clinic Details" [level=3] [ref=e83]
+                  - paragraph [ref=e84]: Update phone, timings, about and tagline
+                - img [ref=e85]
+          - generic [ref=e87]:
+            - generic [ref=e88]:
+              - heading "Recent Bookings" [level=2] [ref=e89]
+              - link "View all →" [ref=e90] [cursor=pointer]:
+                - /url: /clinic-portal/bookings
+            - generic [ref=e136]:
+              - img [ref=e137]
+              - paragraph [ref=e139]: No bookings yet
+  - contentinfo [ref=e91]:
+    - paragraph [ref=e92]: DentIndia
+    - paragraph [ref=e93]: © 2026 · Connecting patients with trusted dental care across India
+  - alert [ref=e94]

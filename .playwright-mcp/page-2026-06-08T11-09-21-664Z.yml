@@ -1,0 +1,19 @@
+- generic [active]:
+  - alert [ref=e1]
+  - dialog [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - heading "Build Error" [level=1] [ref=e7]
+        - paragraph [ref=e8]: Failed to compile
+        - generic [ref=e9]:
+          - text: Next.js (14.2.3) is outdated
+          - link "(learn more)" [ref=e11] [cursor=pointer]:
+            - /url: https://nextjs.org/docs/messages/version-staleness
+      - generic [ref=e12]:
+        - generic [ref=e13]:
+          - link "./app/globals.css:3:1" [ref=e14] [cursor=pointer]:
+            - text: ./app/globals.css:3:1
+            - img [ref=e15]
+          - generic [ref=e20]: "Syntax error: /Users/maruthi/Downloads/dental-india/app/globals.css The `border-border` class does not exist. If `border-border` is a custom class, make sure it is defined within a `@layer` directive. 1 | @import \"tw-animate-css\"; 2 | @import \"shadcn/tailwind.css\"; > 3 | @tailwind base; | ^ 4 | @tailwind components; 5 | @tailwind utilities;"
+        - contentinfo [ref=e21]:
+          - paragraph [ref=e22]: This error occurred during the build process and can only be dismissed by fixing the error.

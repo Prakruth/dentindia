@@ -3,8 +3,11 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { ArrowLeft, Phone, Mail, Calendar, Clock, User, MessageSquare } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 import type { Clinic, Service } from '@/lib/types'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 
 interface BookingFormClientProps {
   clinic?: Clinic
@@ -71,7 +74,7 @@ export default function BookingFormClient({
     return (
       <div className="min-h-screen bg-white px-4 py-8">
         <div className="max-w-2xl mx-auto">
-          <Link href="/" className="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-700 mb-4">
+          <Link href="/" className="inline-flex items-center gap-1.5 text-teal-600 hover:text-teal-700 mb-4">
             <ArrowLeft size={16} />
             Back
           </Link>
@@ -98,92 +101,139 @@ export default function BookingFormClient({
   return (
     <div className="min-h-screen bg-stone-50 px-4 py-8">
       <div className="max-w-2xl mx-auto">
-        <Link href="/" className="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-700 mb-8">
+        <Link href="/" className="inline-flex items-center gap-1.5 text-teal-600 hover:text-teal-700 mb-8 transition-colors">
           <ArrowLeft size={16} />
           Back to search
         </Link>
 
-        <div className="bg-white rounded-2xl shadow-sm border border-stone-200 p-8 mb-8">
-          <h1 className="text-3xl font-bold text-stone-900 mb-2">Book Appointment</h1>
-          <p className="text-stone-600 mb-6">Fill in your details to book an appointment</p>
+        <Card className="ring-0 border border-stone-200 shadow-sm mb-8">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-3xl font-bold text-stone-900">Book Appointment</CardTitle>
+            <p className="text-stone-600 text-sm mt-1">Fill in your details to book an appointment</p>
+          </CardHeader>
 
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8">
-            <p className="font-semibold text-stone-900">{clinic.name}</p>
-            <p className="text-sm text-stone-600">{clinic.doctor}</p>
-            <p className="text-sm text-stone-600 mt-2">Service: {service.name}</p>
-            <p className="text-sm font-semibold text-blue-600 mt-2">₹{price}</p>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-2 gap-4">
-              <input
-                type="text"
-                placeholder="First Name"
-                required
-                value={formData.firstName}
-                onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                className="px-4 py-2 border border-stone-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-              />
-              <input
-                type="text"
-                placeholder="Last Name"
-                required
-                value={formData.lastName}
-                onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                className="px-4 py-2 border border-stone-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-              />
+          <CardContent className="pb-8">
+            {/* Booking summary */}
+            <div className="bg-teal-50 border border-teal-200 rounded-lg p-4 mb-8">
+              <p className="font-semibold text-stone-900">{clinic.name}</p>
+              <p className="text-sm text-stone-600">{clinic.doctor}</p>
+              <p className="text-sm text-stone-600 mt-2">Service: {service.name}</p>
+              <p className="text-sm font-semibold text-teal-700 mt-2">₹{price}</p>
             </div>
 
-            <input
-              type="email"
-              placeholder="Email"
-              required
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full px-4 py-2 border border-stone-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-            />
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label htmlFor="firstName" className="text-sm font-medium text-stone-700">
+                    First Name
+                  </label>
+                  <Input
+                    id="firstName"
+                    type="text"
+                    placeholder="First Name"
+                    required
+                    value={formData.firstName}
+                    onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                    className="h-10"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label htmlFor="lastName" className="text-sm font-medium text-stone-700">
+                    Last Name
+                  </label>
+                  <Input
+                    id="lastName"
+                    type="text"
+                    placeholder="Last Name"
+                    required
+                    value={formData.lastName}
+                    onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                    className="h-10"
+                  />
+                </div>
+              </div>
 
-            <input
-              type="tel"
-              placeholder="Phone Number"
-              required
-              value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-              className="w-full px-4 py-2 border border-stone-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-            />
+              <div className="space-y-1.5">
+                <label htmlFor="email" className="text-sm font-medium text-stone-700">
+                  Email Address
+                </label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="h-10"
+                />
+              </div>
 
-            <input
-              type="date"
-              required
-              value={formData.preferredDate}
-              onChange={(e) => setFormData({ ...formData, preferredDate: e.target.value })}
-              className="w-full px-4 py-2 border border-stone-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-            />
+              <div className="space-y-1.5">
+                <label htmlFor="phone" className="text-sm font-medium text-stone-700">
+                  Phone Number
+                </label>
+                <Input
+                  id="phone"
+                  type="tel"
+                  placeholder="+91 98765 43210"
+                  required
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  className="h-10"
+                />
+              </div>
 
-            <input
-              type="time"
-              required
-              value={formData.preferredTime}
-              onChange={(e) => setFormData({ ...formData, preferredTime: e.target.value })}
-              className="w-full px-4 py-2 border border-stone-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-            />
+              <div className="space-y-1.5">
+                <label htmlFor="preferredDate" className="text-sm font-medium text-stone-700">
+                  Preferred Date
+                </label>
+                <Input
+                  id="preferredDate"
+                  type="date"
+                  required
+                  value={formData.preferredDate}
+                  onChange={(e) => setFormData({ ...formData, preferredDate: e.target.value })}
+                  className="h-10"
+                />
+              </div>
 
-            <textarea
-              placeholder="Additional notes (optional)"
-              value={formData.notes}
-              onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-              className="w-full px-4 py-2 border border-stone-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none resize-none h-24"
-            />
+              <div className="space-y-1.5">
+                <label htmlFor="preferredTime" className="text-sm font-medium text-stone-700">
+                  Preferred Time
+                </label>
+                <Input
+                  id="preferredTime"
+                  type="time"
+                  required
+                  value={formData.preferredTime}
+                  onChange={(e) => setFormData({ ...formData, preferredTime: e.target.value })}
+                  className="h-10"
+                />
+              </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
-            >
-              {loading ? 'Submitting...' : 'Confirm Appointment'}
-            </button>
-          </form>
-        </div>
+              <div className="space-y-1.5">
+                <label htmlFor="notes" className="text-sm font-medium text-stone-700">
+                  Additional Notes <span className="text-stone-400 font-normal">(optional)</span>
+                </label>
+                <textarea
+                  id="notes"
+                  placeholder="Any special requirements or questions..."
+                  value={formData.notes}
+                  onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                  className="w-full px-3 py-2 border border-input rounded-lg focus:ring-2 focus:ring-ring/50 focus:border-ring outline-none resize-none h-24 text-sm bg-transparent placeholder:text-muted-foreground transition-colors"
+                />
+              </div>
+
+              <Button
+                type="submit"
+                disabled={loading}
+                className="w-full h-11 text-base font-semibold"
+              >
+                {loading ? 'Submitting…' : 'Confirm Appointment'}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
       </div>
     </div>
   )

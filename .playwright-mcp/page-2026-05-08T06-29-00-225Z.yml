@@ -1,0 +1,59 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - link "DentIndia" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img [ref=e6]
+        - generic [ref=e10]: DentIndia
+      - generic [ref=e11]:
+        - link "Home" [ref=e12] [cursor=pointer]:
+          - /url: /
+        - link "How It Works" [ref=e13] [cursor=pointer]:
+          - /url: "#how-it-works"
+        - link "List Your Clinic" [ref=e14] [cursor=pointer]:
+          - /url: mailto:onboard@dentindia.in
+  - main [ref=e15]:
+    - generic [ref=e16]:
+      - complementary [ref=e17]:
+        - link "DentAdmin" [ref=e18] [cursor=pointer]:
+          - /url: /admin
+          - img [ref=e20]
+          - generic [ref=e24]: DentAdmin
+        - navigation [ref=e25]:
+          - link "Dashboard" [ref=e26] [cursor=pointer]:
+            - /url: /admin
+            - img [ref=e27]
+            - text: Dashboard
+          - link "Clinics" [ref=e32] [cursor=pointer]:
+            - /url: /admin/clinics
+            - img [ref=e33]
+            - text: Clinics
+          - link "Bookings" [ref=e37] [cursor=pointer]:
+            - /url: /admin/bookings
+            - img [ref=e38]
+            - text: Bookings
+          - link "Users" [ref=e40] [cursor=pointer]:
+            - /url: /admin/users
+            - img [ref=e41]
+            - text: Users
+        - button "Logout" [ref=e46] [cursor=pointer]:
+          - img [ref=e47]
+          - text: Logout
+      - main [ref=e50]:
+        - generic [ref=e53]:
+          - generic [ref=e54]:
+            - img [ref=e56]
+            - heading "DentAdmin" [level=1] [ref=e60]
+            - paragraph [ref=e61]: Clinic Management Portal
+          - generic [ref=e62]:
+            - heading "Admin Login" [level=2] [ref=e63]
+            - generic [ref=e64]:
+              - generic [ref=e65]: Admin Password
+              - textbox "Enter admin password" [ref=e66]
+            - button "Login to Admin" [disabled] [ref=e67]
+            - paragraph [ref=e69]: "Demo Password: admin123"
+          - paragraph [ref=e70]: This is a password-protected admin area. Unauthorized access is prohibited.
+  - contentinfo [ref=e71]:
+    - paragraph [ref=e72]: DentIndia
+    - paragraph [ref=e73]: © 2026 · Connecting patients with trusted dental care across India
+  - alert [ref=e74]

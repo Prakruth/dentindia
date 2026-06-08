@@ -1,0 +1,61 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - link "Dentobook" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img [ref=e6]
+        - generic [ref=e10]: Dentobook
+      - generic [ref=e11]:
+        - link "Home" [ref=e12] [cursor=pointer]:
+          - /url: /
+        - link "How It Works" [ref=e13] [cursor=pointer]:
+          - /url: "#how-it-works"
+        - link "List Your Clinic" [ref=e14] [cursor=pointer]:
+          - /url: mailto:onboard@dentobook.in
+  - main [ref=e15]:
+    - generic [ref=e17]:
+      - link "Back to search" [ref=e18] [cursor=pointer]:
+        - /url: /
+        - img [ref=e19]
+        - text: Back to search
+      - generic [ref=e21]:
+        - generic [ref=e22]:
+          - generic [ref=e23]: Book Appointment
+          - paragraph [ref=e24]: Fill in your details to book an appointment
+        - generic [ref=e25]:
+          - generic [ref=e26]:
+            - paragraph [ref=e27]: Carewell Dental Clinic
+            - paragraph [ref=e28]: Dr. Varun
+            - paragraph [ref=e29]: "Service: Root Canal Treatment"
+            - paragraph [ref=e30]: ₹3500
+          - generic [ref=e31]:
+            - generic [ref=e32]:
+              - generic [ref=e33]:
+                - text: First Name
+                - textbox "First Name" [ref=e34]
+              - generic [ref=e35]:
+                - text: Last Name
+                - textbox "Last Name" [ref=e36]
+            - generic [ref=e37]:
+              - text: Email Address
+              - textbox "Email Address" [ref=e38]:
+                - /placeholder: you@example.com
+            - generic [ref=e39]:
+              - text: Phone Number
+              - textbox "Phone Number" [ref=e40]:
+                - /placeholder: +91 98765 43210
+            - generic [ref=e41]:
+              - text: Preferred Date
+              - textbox "Preferred Date" [ref=e42]
+            - generic [ref=e43]:
+              - text: Preferred Time
+              - textbox "Preferred Time" [ref=e44]
+            - generic [ref=e45]:
+              - generic [ref=e46]: Additional Notes (optional)
+              - textbox "Additional Notes (optional)" [ref=e47]:
+                - /placeholder: Any special requirements or questions...
+            - button "Confirm Appointment" [ref=e48] [cursor=pointer]
+  - contentinfo [ref=e49]:
+    - paragraph [ref=e50]: Dentobook
+    - paragraph [ref=e51]: © 2026 · Connecting patients with trusted dental care across India
+  - alert [ref=e52]
