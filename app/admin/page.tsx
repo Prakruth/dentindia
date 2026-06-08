@@ -45,7 +45,7 @@ function AdminDashboardContent() {
       {/* Header */}
       <div className="mb-12">
         <h1 className="font-display text-3xl font-bold text-stone-900 mb-2">Dashboard</h1>
-        <p className="text-stone-600">Welcome to DentIndia Admin Portal</p>
+        <p className="text-stone-600">Welcome to Dentobook Admin Portal</p>
       </div>
 
       {/* Stats Cards */}

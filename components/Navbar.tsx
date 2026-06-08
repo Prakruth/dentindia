@@ -22,7 +22,7 @@ export default function Navbar() {
             <Stethoscope size={16} className="text-white" />
           </div>
           <span className="font-display text-xl font-bold text-stone-900 italic">
-            Dent<span className="text-teal-600">India</span>
+            Dento<span className="text-teal-600">book</span>
           </span>
         </Link>
 
@@ -31,7 +31,7 @@ export default function Navbar() {
           <Link href="/" className="hover:text-blue-600 transition-colors">Home</Link>
           <Link href="#how-it-works" className="hover:text-stone-900 transition-colors">How It Works</Link>
           <a
-            href="mailto:onboard@dentindia.in"
+            href="mailto:onboard@dentobook.in"
             className="px-4 py-2 rounded-full bg-teal-600 text-white hover:bg-teal-700 transition-colors text-sm"
           >
             List Your Clinic
@@ -54,7 +54,7 @@ export default function Navbar() {
           <Link href="/" onClick={() => setOpen(false)} className="hover:text-blue-600">Home</Link>
           <Link href="#how-it-works" onClick={() => setOpen(false)} className="hover:text-stone-900">How It Works</Link>
           <a
-            href="mailto:onboard@dentindia.in"
+            href="mailto:onboard@dentobook.in"
             className="inline-block px-4 py-2 rounded-full bg-teal-600 text-white text-center hover:bg-teal-700 transition"
             onClick={() => setOpen(false)}
           >

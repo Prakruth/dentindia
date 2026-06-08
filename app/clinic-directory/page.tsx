@@ -1,10 +1,33 @@
 import Link from "next/link";
-import { ArrowLeft, MapPin, Star, Users } from "lucide-react";
+import { ArrowLeft, MapPin, Users } from "lucide-react";
 import { getAllClinics } from "@/lib/data";
+import type { Metadata } from "next";
 
-export const metadata = {
-  title: "Clinic Directory | DentIndia",
-  description: "Browse all dental clinics across India on DentIndia",
+export const metadata: Metadata = {
+  title: "Dental Clinic Directory India — Browse All Clinics by City",
+  description:
+    "Complete directory of dental clinics across India. Find dentists in Mumbai, Delhi, Bengaluru, Chennai and more cities. Compare ratings, experience & services.",
+  keywords: [
+    "dental clinic directory India",
+    "list of dental clinics India",
+    "dentists in India",
+    "dental clinics Mumbai",
+    "dental clinics Delhi",
+    "dental clinics Bengaluru",
+    "dental clinics Chennai",
+    "find dentist India",
+  ],
+  alternates: {
+    canonical: "https://dentobook.in/clinic-directory",
+  },
+  openGraph: {
+    title: "Dental Clinic Directory India — Browse All Clinics by City",
+    description:
+      "Complete directory of dental clinics across India. Compare ratings, experience & services.",
+    url: "https://dentobook.in/clinic-directory",
+    type: "website",
+    siteName: "Dentobook",
+  },
 };
 
 export default async function ClinicDirectory() {
@@ -23,8 +46,38 @@ export default async function ClinicDirectory() {
 
   const cities = Object.keys(groupedByCit).sort();
 
+  const itemListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Dental Clinics in India",
+    description: "Complete directory of dental clinics across India",
+    url: "https://dentobook.in/clinic-directory",
+    numberOfItems: clinics.length,
+    itemListElement: clinics.map((clinic, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "Dentist",
+        name: clinic.name,
+        url: `https://dentobook.in/clinic/${clinic.id}`,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: clinic.address,
+          addressLocality: clinic.area,
+          addressRegion: clinic.city,
+          addressCountry: "IN",
+        },
+      },
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-stone-50">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+      />
+
       <div className="bg-gradient-to-br from-teal-700 via-teal-600 to-teal-500 text-white px-4 pt-8 pb-16">
         <div className="max-w-6xl mx-auto">
           <Link
@@ -36,10 +89,10 @@ export default async function ClinicDirectory() {
           </Link>
 
           <h1 className="font-display text-4xl sm:text-5xl font-bold mb-3">
-            Clinic Directory
+            Dental Clinic Directory
           </h1>
           <p className="text-teal-100 text-lg">
-            Browse all {clinics.length} dental clinics across {cities.length} cities
+            Browse all {clinics.length} dental clinics across {cities.length} cities in India
           </p>
         </div>
       </div>
@@ -49,7 +102,7 @@ export default async function ClinicDirectory() {
           <div key={city} className="mb-16">
             <h2 className="font-display text-2xl font-bold text-stone-900 mb-6 flex items-center gap-2">
               <MapPin size={20} className="text-teal-600" />
-              {city}
+              Dental Clinics in {city}
               <span className="text-sm font-normal text-stone-500 ml-2">
                 ({groupedByCit[city].length} clinic{groupedByCit[city].length !== 1 ? "s" : ""})
               </span>
@@ -77,12 +130,6 @@ export default async function ClinicDirectory() {
                   </p>
 
                   <div className="space-y-2 mb-4 text-sm">
-                    <div className="flex items-center gap-2 text-stone-600">
-                      <Star size={14} className="text-amber-400" />
-                      <span className="font-medium">{clinic.rating}</span>
-                      <span className="text-stone-400">({clinic.review_count} reviews)</span>
-                    </div>
-
                     <div className="flex items-center gap-2 text-stone-600">
                       <Users size={14} className="text-teal-600" />
                       <span>{clinic.experience} years experience</span>
