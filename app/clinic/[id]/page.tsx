@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { MapPin, Clock, Star, Globe, ArrowLeft, Award } from "lucide-react";
+import { MapPin, Clock, Globe, ArrowLeft, Award } from "lucide-react";
 import { getClinic, getAllClinics } from "@/lib/data";
 import ServiceCard from "@/components/ServiceCard";
 import ClinicPageClient from "@/components/ClinicPageClient";
@@ -132,10 +132,6 @@ export default async function ClinicPage({ params }: PageProps) {
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-2 mb-1">
                 <h1 className="font-display text-2xl sm:text-3xl font-bold">{clinic.name}</h1>
-                <span className="flex items-center gap-1 bg-white/20 rounded-full px-2.5 py-1 text-xs font-medium">
-                  <Star size={11} className="fill-amber-300 text-amber-300" />
-                  {clinic.rating} · {clinic.review_count} reviews
-                </span>
               </div>
               <p className="text-teal-100 font-medium">{clinic.doctor}</p>
               <p className="text-teal-200 text-sm">{clinic.qualification}</p>
