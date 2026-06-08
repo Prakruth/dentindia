@@ -5,8 +5,6 @@ import { getClinic, getAllClinics } from "@/lib/data";
 import ServiceCard from "@/components/ServiceCard";
 import ClinicPageClient from "@/components/ClinicPageClient";
 import type { Metadata } from "next";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 
 interface PageProps {
   params: { id: string };
@@ -161,50 +159,38 @@ export default async function ClinicPage({ params }: PageProps) {
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 -mt-10 pb-20">
         {/* Quick info card */}
-        <Card className="mb-8 shadow-sm ring-0 border border-stone-200">
-          <CardContent className="pt-5 pb-5">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="flex items-start gap-3">
-                <MapPin size={16} className="text-teal-500 mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-xs text-stone-400 font-medium uppercase tracking-wide mb-0.5">Address</p>
-                  <p className="text-sm text-stone-700 leading-snug">{clinic.address}</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <Clock size={16} className="text-teal-500 mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-xs text-stone-400 font-medium uppercase tracking-wide mb-0.5">Timings</p>
-                  <p className="text-sm text-stone-700">{clinic.timings}</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <Globe size={16} className="text-teal-500 mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-xs text-stone-400 font-medium uppercase tracking-wide mb-0.5">Languages</p>
-                  <p className="text-sm text-stone-700">{clinic.languages.join(", ")}</p>
-                </div>
-              </div>
+        <div className="bg-white rounded-2xl border border-stone-200 shadow-sm p-5 mb-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="flex items-start gap-3">
+            <MapPin size={16} className="text-teal-500 mt-0.5 flex-shrink-0" />
+            <div>
+              <p className="text-xs text-stone-400 font-medium uppercase tracking-wide mb-0.5">Address</p>
+              <p className="text-sm text-stone-700 leading-snug">{clinic.address}</p>
             </div>
-          </CardContent>
-        </Card>
-
-        <Separator className="mb-8" />
+          </div>
+          <div className="flex items-start gap-3">
+            <Clock size={16} className="text-teal-500 mt-0.5 flex-shrink-0" />
+            <div>
+              <p className="text-xs text-stone-400 font-medium uppercase tracking-wide mb-0.5">Timings</p>
+              <p className="text-sm text-stone-700">{clinic.timings}</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3">
+            <Globe size={16} className="text-teal-500 mt-0.5 flex-shrink-0" />
+            <div>
+              <p className="text-xs text-stone-400 font-medium uppercase tracking-wide mb-0.5">Languages</p>
+              <p className="text-sm text-stone-700">{clinic.languages.join(", ")}</p>
+            </div>
+          </div>
+        </div>
 
         {/* About */}
-        <Card className="mb-8 ring-0 border border-stone-200 shadow-none">
-          <CardHeader className="pb-2">
-            <CardTitle className="font-display text-xl font-bold text-stone-900 flex items-center gap-2">
-              <Award size={18} className="text-teal-500" />
-              About {clinic.doctor}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="pb-6">
-            <p className="text-stone-600 leading-relaxed text-sm sm:text-base">{clinic.about}</p>
-          </CardContent>
-        </Card>
-
-        <Separator className="mb-8" />
+        <section className="mb-10">
+          <h2 className="font-display text-xl font-bold text-stone-900 mb-3 flex items-center gap-2">
+            <Award size={18} className="text-teal-500" />
+            About {clinic.doctor}
+          </h2>
+          <p className="text-stone-600 leading-relaxed text-sm sm:text-base">{clinic.about}</p>
+        </section>
 
         {/* Services */}
         <section className="mb-10">

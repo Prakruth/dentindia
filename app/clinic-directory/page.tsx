@@ -2,9 +2,6 @@ import Link from "next/link";
 import { ArrowLeft, MapPin, Users } from "lucide-react";
 import { getAllClinics } from "@/lib/data";
 import type { Metadata } from "next";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Dental Clinic Directory India — Browse All Clinics by City",
@@ -103,12 +100,12 @@ export default async function ClinicDirectory() {
       <div className="max-w-6xl mx-auto px-4 py-12">
         {cities.map((city) => (
           <div key={city} className="mb-16">
-            <h2 className="font-display text-2xl font-bold text-stone-900 mb-6 flex items-center gap-3">
-              <MapPin size={20} className="text-teal-600 flex-shrink-0" />
+            <h2 className="font-display text-2xl font-bold text-stone-900 mb-6 flex items-center gap-2">
+              <MapPin size={20} className="text-teal-600" />
               Dental Clinics in {city}
-              <Badge variant="secondary" className="ml-1 text-stone-600 bg-stone-200 border-0">
-                {groupedByCit[city].length} clinic{groupedByCit[city].length !== 1 ? "s" : ""}
-              </Badge>
+              <span className="text-sm font-normal text-stone-500 ml-2">
+                ({groupedByCit[city].length} clinic{groupedByCit[city].length !== 1 ? "s" : ""})
+              </span>
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -116,58 +113,52 @@ export default async function ClinicDirectory() {
                 <Link
                   key={clinic.id}
                   href={`/clinic/${clinic.id}`}
-                  className="group"
+                  className="group bg-white rounded-2xl border border-stone-200 p-6 hover:shadow-lg hover:border-teal-400 transition-all"
                 >
-                  <Card className="h-full ring-0 border border-stone-200 hover:border-teal-400 hover:shadow-lg transition-all">
-                    <CardContent className="pt-6">
-                      <div className="flex items-start gap-3 mb-3">
-                        <div className="text-4xl flex-shrink-0">{clinic.image}</div>
-                        <div className="flex-1 min-w-0">
-                          <h3 className="font-semibold text-stone-900 text-lg group-hover:text-teal-600 transition-colors leading-tight">
-                            {clinic.name}
-                          </h3>
-                          <p className="text-sm text-stone-600">{clinic.doctor}</p>
-                        </div>
-                      </div>
+                  <div className="flex items-start gap-3 mb-3">
+                    <div className="text-4xl">{clinic.image}</div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-stone-900 text-lg group-hover:text-teal-600 transition-colors">
+                        {clinic.name}
+                      </h3>
+                      <p className="text-sm text-stone-600">{clinic.doctor}</p>
+                    </div>
+                  </div>
 
-                      <p className="text-xs text-stone-500 mb-3 line-clamp-2">
-                        {clinic.tagline}
-                      </p>
+                  <p className="text-xs text-stone-500 mb-3 line-clamp-2">
+                    {clinic.tagline}
+                  </p>
 
-                      <div className="space-y-2 mb-4 text-sm">
-                        <div className="flex items-center gap-2 text-stone-600">
-                          <Users size={14} className="text-teal-600 flex-shrink-0" />
-                          <span>{clinic.experience} years experience</span>
-                        </div>
-                        <div className="text-xs text-stone-500">
-                          {clinic.services.length} services available
-                        </div>
-                      </div>
+                  <div className="space-y-2 mb-4 text-sm">
+                    <div className="flex items-center gap-2 text-stone-600">
+                      <Users size={14} className="text-teal-600" />
+                      <span>{clinic.experience} years experience</span>
+                    </div>
 
-                      <div className="flex flex-wrap gap-1.5">
-                        {clinic.specializations.slice(0, 2).map((spec) => (
-                          <Badge
-                            key={spec}
-                            variant="outline"
-                            className="bg-teal-50 text-teal-700 border-teal-200 text-xs"
-                          >
-                            {spec}
-                          </Badge>
-                        ))}
-                        {clinic.specializations.length > 2 && (
-                          <Badge variant="outline" className="text-stone-500 border-stone-200 text-xs">
-                            +{clinic.specializations.length - 2} more
-                          </Badge>
-                        )}
-                      </div>
-                    </CardContent>
+                    <div className="text-xs text-stone-500 pt-1">
+                      {clinic.services.length} services available
+                    </div>
+                  </div>
 
-                    <CardFooter className="bg-transparent border-t border-stone-100">
-                      <Button className="w-full" size="sm">
-                        View Clinic →
-                      </Button>
-                    </CardFooter>
-                  </Card>
+                  <div className="flex flex-wrap gap-1 mb-4">
+                    {clinic.specializations.slice(0, 2).map((spec) => (
+                      <span
+                        key={spec}
+                        className="px-2 py-1 bg-teal-50 text-teal-700 text-xs rounded-full"
+                      >
+                        {spec}
+                      </span>
+                    ))}
+                    {clinic.specializations.length > 2 && (
+                      <span className="px-2 py-1 text-stone-500 text-xs">
+                        +{clinic.specializations.length - 2} more
+                      </span>
+                    )}
+                  </div>
+
+                  <button className="w-full py-2 bg-teal-600 text-white rounded-lg text-sm font-medium hover:bg-teal-700 transition">
+                    View Clinic →
+                  </button>
                 </Link>
               ))}
             </div>
