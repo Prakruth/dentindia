@@ -187,7 +187,7 @@ export default function ServiceComparisonClient({
                     </div>
                     <div className="text-right">
                       <Link
-                        href={`/booking?clinic=${match.clinic.id}&service=${encodeURIComponent(match.service.name)}`}
+                        href={`/booking?clinic=${match.clinic.id}&service=${encodeURIComponent(match.service.name)}&price=${match.service.price_from ?? 0}`}
                         onClick={(e) => {
                           e.stopPropagation();
                           trackBookingInitiated(match.clinic.id, match.service.name, match.service.price_from);
