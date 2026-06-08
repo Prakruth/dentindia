@@ -181,10 +181,6 @@ export default function ServiceComparisonClient({
                     <div>
                       <span className="text-stone-600">{match.service.duration}</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Star size={16} className="fill-stone-300 text-stone-300" />
-                      <span>{match.service.review_count || 0} reviews</span>
-                    </div>
                     <div className="text-right">
                       <Link
                         href={`/booking?clinic=${match.clinic.id}&service=${encodeURIComponent(match.service.name)}&price=${match.service.price_from ?? 0}`}
