@@ -156,10 +156,6 @@ export default function ServiceComparisonClient({
                     <div>
                       <div className="flex items-center gap-2 mb-1">
                         <h3 className="text-lg font-bold text-stone-900">{match.clinic.name}</h3>
-                        <span className="flex items-center gap-1 bg-yellow-50 px-2 py-1 rounded-full">
-                          <Star size={14} className="fill-amber-400 text-amber-400" />
-                          <span className="text-sm font-semibold text-stone-700">{match.clinic.rating}</span>
-                        </span>
                       </div>
                       <p className="text-sm text-stone-600">{match.clinic.doctor}</p>
                     </div>
@@ -180,6 +176,10 @@ export default function ServiceComparisonClient({
                     </div>
                     <div>
                       <span className="text-stone-600">{match.service.duration}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Star size={16} className="fill-stone-300 text-stone-300" />
+                      <span>{match.service.review_count || 0} reviews</span>
                     </div>
                     <div className="text-right">
                       <Link
