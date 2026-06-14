@@ -27,7 +27,7 @@ export async function GET(_request: NextRequest) {
 
     const { data: bookings, error } = await adminClient
       .from('bookings')
-      .select('*')
+      .select('*, clinics(name, doctor, city, area, phone)')
       .order('created_at', { ascending: false })
 
     if (error) {

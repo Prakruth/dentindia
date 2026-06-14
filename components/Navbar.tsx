@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Menu, X, Stethoscope } from "lucide-react";
+import Image from "next/image";
+import { Menu, X } from "lucide-react";
 
 const HIDDEN_PATHS = ['/login', '/register']
 
@@ -15,15 +16,17 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-stone-200">
-      <nav className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <nav className="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group" onClick={() => setOpen(false)}>
-          <div className="w-8 h-8 rounded-lg bg-teal-600 flex items-center justify-center">
-            <Stethoscope size={16} className="text-white" />
-          </div>
-          <span className="font-display text-xl font-bold text-stone-900 italic">
-            Dento<span className="text-teal-600">book</span>
-          </span>
+        <Link href="/" onClick={() => setOpen(false)}>
+          <Image
+            src="/logo.jpeg"
+            alt="Dentobook"
+            width={200}
+            height={200}
+            className="h-20 w-20 object-contain"
+            priority
+          />
         </Link>
 
         {/* Desktop links */}

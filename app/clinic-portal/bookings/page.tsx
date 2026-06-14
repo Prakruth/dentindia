@@ -10,6 +10,7 @@ import {
   Loader,
   User,
   Phone,
+  Building2,
 } from 'lucide-react';
 import type { Booking } from '@/lib/types';
 
@@ -199,6 +200,17 @@ export default function ClinicPortalBookingsPage() {
                 key={booking.id}
                 className="bg-white border border-stone-200 rounded-xl p-5 hover:shadow-sm transition"
               >
+                {/* Clinic info */}
+                {booking.clinics && (
+                  <div className="flex items-center gap-2 mb-3 pb-3 border-b border-stone-100">
+                    <Building2 size={14} className="text-teal-500 flex-shrink-0" />
+                    <div>
+                      <span className="font-semibold text-stone-900 text-sm">{booking.clinics.name}</span>
+                      <span className="text-stone-400 text-xs ml-2">{booking.clinics.doctor} · {booking.clinics.area}, {booking.clinics.city}</span>
+                    </div>
+                  </div>
+                )}
+
                 {/* Top row */}
                 <div className="flex items-start justify-between mb-4 pb-4 border-b border-stone-100">
                   <div className="flex items-center gap-2">

@@ -3,6 +3,8 @@ import { Playfair_Display, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import Script from "next/script";
+import Image from "next/image";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -94,10 +96,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en-IN">
       <body className={`${playfair.variable} ${dmSans.variable} font-sans antialiased bg-stone-50 text-stone-900`}>
         {gaId && <GoogleAnalytics measurementId={gaId} />}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-18148498181"
+          strategy="afterInteractive"
+        />
+        <Script id="google-ads" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-18148498181');
+          `}
+        </Script>
         <Navbar />
         <main>{children}</main>
         <footer className="border-t border-stone-200 mt-20 py-10 text-center text-sm text-stone-400">
-          <p className="font-display italic text-stone-500 text-base mb-1">Dentobook</p>
+          <Image src="/logo.jpeg" alt="Dentobook" width={100} height={34} className="h-8 w-auto object-contain mx-auto mb-2" />
           <p>© {new Date().getFullYear()} · Connecting patients with trusted dental care across India</p>
         </footer>
       </body>

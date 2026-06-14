@@ -38,7 +38,7 @@ export async function GET() {
 
   const { data: bookings, error: bookingsError } = await adminClient
     .from('bookings')
-    .select('*')
+    .select('*, clinics(name, doctor, city, area, phone)')
     .eq('clinic_id', clinicId)
     .order('created_at', { ascending: false })
 

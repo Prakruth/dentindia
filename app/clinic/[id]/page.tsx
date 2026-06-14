@@ -212,6 +212,7 @@ export default async function ClinicPage({ params }: PageProps) {
           email={clinic.email}
           whatsappLink={whatsappLink}
           doctor={clinic.doctor}
+          hasServices={clinic.services.length > 0}
         />
       </div>
     </div>

@@ -71,19 +71,28 @@ export interface ClinicUser {
 export interface ClinicServiceMatch {
   clinic: Clinic
   service: Service
-  distance: number
+}
+
+export interface BookingClinic {
+  name: string
+  doctor: string
+  city: string
+  area: string
+  phone: string
 }
 
 export interface Booking {
   id?: string
   clinic_id: string
   patient_name: string
-  patient_email: string
+  patient_email?: string
   patient_phone: string
   service_name: string
   preferred_date: string
   preferred_time: string
   notes?: string
   status?: string
+  confirmation_token?: string
   created_at?: string
+  clinics?: BookingClinic
 }

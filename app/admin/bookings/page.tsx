@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Calendar, Clock, User, Mail, Phone, MapPin, Loader, AlertCircle, CheckCircle, Clock3 } from 'lucide-react';
+import { Calendar, Clock, User, Mail, Phone, MapPin, Building2, Loader, AlertCircle, CheckCircle, Clock3 } from 'lucide-react';
 import type { Booking } from '@/lib/types';
 function BookingsContent() {
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -147,6 +147,18 @@ function BookingsContent() {
                 </span>
               </div>
 
+              {/* Clinic Info */}
+              {booking.clinics && (
+                <div className="mb-4 pb-4 border-b border-stone-100 flex items-start gap-2">
+                  <Building2 size={15} className="text-stone-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-semibold text-stone-900 text-sm">{booking.clinics.name}</p>
+                    <p className="text-xs text-stone-500">{booking.clinics.doctor} · {booking.clinics.area}, {booking.clinics.city}</p>
+                    <a href={`tel:${booking.clinics.phone}`} className="text-xs text-blue-600 hover:underline">{booking.clinics.phone}</a>
+                  </div>
+                </div>
+              )}
+
               {/* Main Content - Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
                 {/* Patient Info */}
@@ -160,20 +172,22 @@ function BookingsContent() {
                   </div>
 
                   <div>
-                    <p className="text-xs font-semibold text-stone-500 uppercase mb-1">Email</p>
-                    <div className="flex items-center gap-2">
-                      <Mail size={16} className="text-stone-400" />
-                      <p className="text-stone-700">{booking.patient_email}</p>
-                    </div>
-                  </div>
-
-                  <div>
                     <p className="text-xs font-semibold text-stone-500 uppercase mb-1">Phone</p>
                     <div className="flex items-center gap-2">
                       <Phone size={16} className="text-stone-400" />
                       <p className="text-stone-700">{booking.patient_phone}</p>
                     </div>
                   </div>
+
+                  {booking.patient_email && (
+                    <div>
+                      <p className="text-xs font-semibold text-stone-500 uppercase mb-1">Email</p>
+                      <div className="flex items-center gap-2">
+                        <Mail size={16} className="text-stone-400" />
+                        <p className="text-stone-700">{booking.patient_email}</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Appointment Info */}

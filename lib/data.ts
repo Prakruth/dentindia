@@ -91,13 +91,9 @@ export async function getServiceComparisons(serviceName: string, city: string | 
   clinics.forEach((clinic) => {
     const service = clinic.services?.find((s: Service) => s.name === serviceName)
     if (service) {
-      const hash = clinic.id.charCodeAt(0) + clinic.id.charCodeAt(clinic.id.length - 1)
-      const distance = (hash % 95) / 10 + 0.5
-
       results.push({
         clinic: mapClinicFromDB(clinic),
         service,
-        distance,
       })
     }
   })
