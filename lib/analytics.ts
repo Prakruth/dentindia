@@ -348,3 +348,20 @@ export const trackCallInitiated = (clinicId: string, sourcePage: string) => {
     event_category: 'lead_generation',
   });
 };
+
+export const trackWhatsAppClick = (clinicId: string, clinicName: string) => {
+  sendEvent('whatsapp_clicked', {
+    clinic_id: clinicId,
+    clinic_name: clinicName,
+    event_category: 'engagement',
+    event_label: 'high_intent',
+  });
+};
+
+export const trackWhatsAppInitiated = (clinicId: string, sourcePage: string) => {
+  sendEvent('whatsapp_initiated', {
+    clinic_id: clinicId,
+    source_page: sourcePage,
+    event_category: 'lead_generation',
+  });
+};

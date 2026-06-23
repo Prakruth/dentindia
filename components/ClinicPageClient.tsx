@@ -9,6 +9,8 @@ import {
   trackCallInitiated,
   trackLeadGenerated,
   trackBookingInitiated,
+  trackWhatsAppClick,
+  trackWhatsAppInitiated,
 } from "@/lib/analytics";
 
 interface ClinicPageClientProps {
@@ -43,6 +45,8 @@ export default function ClinicPageClient({
   };
 
   const handleWhatsAppClick = () => {
+    trackWhatsAppClick(clinicId, clinicName);
+    trackWhatsAppInitiated(clinicId, window.location.pathname);
     trackLeadGenerated(clinicId, "whatsapp_click");
   };
 
