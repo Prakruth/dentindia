@@ -87,6 +87,20 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://dentobook.in",
   },
+  icons: {
+    icon: "/logo.jpeg",
+    shortcut: "/logo.jpeg",
+    apple: "/logo.jpeg",
+  },
+};
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Dentobook",
+  url: "https://dentobook.in",
+  logo: "https://dentobook.in/logo.jpeg",
+  sameAs: [],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -94,6 +108,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <html lang="en-IN">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+      </head>
       <body className={`${playfair.variable} ${dmSans.variable} font-sans antialiased bg-stone-50 text-stone-900`}>
         {gaId && <GoogleAnalytics measurementId={gaId} />}
         <Script
