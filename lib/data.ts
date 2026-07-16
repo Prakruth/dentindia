@@ -1,6 +1,6 @@
 'use server'
 
-import { createClient } from './supabase/server'
+import { createClient, createBuildClient } from './supabase/server'
 import { Clinic, ClinicServiceMatch, Service } from './types'
 
 export async function getClinic(id: string): Promise<Clinic | undefined> {
@@ -28,6 +28,29 @@ export async function getClinic(id: string): Promise<Clinic | undefined> {
 
 export async function getAllClinics(): Promise<Clinic[]> {
   const supabase = await createClient()
+
+  const { data: clinics, error } = await supabase
+    .from('clinics')
+    .select(`
+      id, name, doctor, qualification, city, area, address, phone, email,
+      rating, review_count, experience, tagline, about, languages, timings,
+      specializations, image, created_at, updated_at,
+      services(
+        id, clinic_id, name, description, duration, price_from, price_to,
+        rating, review_count, created_at,
+        service_variants(id, service_id, type, price, price_min, price_max, duration, created_at)
+      )
+    `)
+    .eq('is_active', true)
+
+  if (error || !clinics) return []
+
+  return clinics.map(mapClinicFromDB)
+}
+
+// Build-time version for use in generateStaticParams (no cookies)
+export async function getAllClinicsBuildTime(): Promise<Clinic[]> {
+  const supabase = createBuildClient()
 
   const { data: clinics, error } = await supabase
     .from('clinics')

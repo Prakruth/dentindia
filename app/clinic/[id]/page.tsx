@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { MapPin, Clock, Globe, ArrowLeft, Award } from "lucide-react";
-import { getClinic, getAllClinics } from "@/lib/data";
+import { getClinic, getAllClinicsBuildTime } from "@/lib/data";
 import ServiceCard from "@/components/ServiceCard";
 import ClinicPageClient from "@/components/ClinicPageClient";
 import type { Metadata } from "next";
@@ -10,10 +10,9 @@ interface PageProps {
   params: { id: string };
 }
 
-export const dynamic = 'force-dynamic';
-
 export async function generateStaticParams() {
-  return [];
+  const clinics = await getAllClinicsBuildTime();
+  return clinics.map((clinic) => ({ id: clinic.id }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
