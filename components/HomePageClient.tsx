@@ -4,15 +4,15 @@ import { useState, useMemo, useRef, useEffect } from "react";
 import { Search, Sparkles, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { trackSearchInitiated, trackSearchResults, trackFilterApplied } from "@/lib/analytics";
+import { toServiceSlug } from "@/lib/utils";
 
 interface HomePageClientProps {
   services: string[];
-  cities: string[];
 }
 
-export default function HomePageClient({ services: allServices, cities: CITIES }: HomePageClientProps) {
+export default function HomePageClient({ services: allServices }: HomePageClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCity, setSelectedCity] = useState("All Cities");
+  const selectedCity = "Bengaluru"; // Hardcoded to Bangalore
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -78,8 +78,8 @@ export default function HomePageClient({ services: allServices, cities: CITIES }
 
   const handleSelectService = (service: string) => {
     // Track search initiated
-    trackSearchInitiated(service, selectedCity !== "All Cities" ? selectedCity : undefined);
-    window.location.href = `/services/${encodeURIComponent(service)}?city=${selectedCity}`;
+    trackSearchInitiated(service, selectedCity);
+    window.location.href = `/services/${toServiceSlug(service)}?city=${selectedCity}`;
   };
 
   return (
@@ -87,14 +87,14 @@ export default function HomePageClient({ services: allServices, cities: CITIES }
       <section className="bg-gradient-to-b from-blue-700 via-blue-600 to-blue-500 text-white px-4 pt-16 pb-24 sm:pt-24">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-blue-200 text-sm font-medium tracking-widest uppercase mb-3 animate-fade-up">
-            Service-First Comparison
+            Bangalore's Dental Service Comparison
           </p>
           <h1 className="font-display text-4xl sm:text-5xl font-bold leading-tight mb-4 animate-fade-up-delay-1">
             Find & Compare <br />
-            <span className="italic text-blue-100">Dental Services</span>
+            <span className="italic text-blue-100">Dental Services in Bangalore</span>
           </h1>
           <p className="text-blue-100 text-base sm:text-lg mb-10 animate-fade-up-delay-2">
-            Search for a service, compare prices across clinics, and book with the best option for your budget.
+            Search for a service, compare prices across Bangalore clinics, and book with the best option for your budget.
           </p>
 
           <div className="max-w-lg mx-auto mb-6 animate-fade-up-delay-3 relative" ref={dropdownRef}>
@@ -151,24 +151,9 @@ export default function HomePageClient({ services: allServices, cities: CITIES }
           </div>
 
           <div className="mt-6 flex gap-2 flex-wrap justify-center">
-            {CITIES.map((city) => (
-              <button
-                key={city}
-                type="button"
-                onClick={() => {
-                  setSelectedCity(city);
-                  // Track filter applied
-                  trackFilterApplied('city', city);
-                }}
-                className={`text-sm px-3 py-1.5 rounded-full border transition-all ${
-                  city === selectedCity
-                    ? "bg-white text-blue-600 border-white"
-                    : "border-blue-300 text-blue-100 hover:border-white hover:text-white"
-                }`}
-              >
-                {city}
-              </button>
-            ))}
+            <div className="text-sm px-4 py-2 rounded-full bg-white/20 text-white border border-white/40 backdrop-blur-sm">
+              📍 Serving Bangalore
+            </div>
           </div>
         </div>
       </section>
@@ -180,8 +165,7 @@ export default function HomePageClient({ services: allServices, cities: CITIES }
             {searchQuery.trim() ? "Search Results" : "Popular Services"}
           </h2>
           <p className="text-stone-500 text-sm">
-            {filteredServices.length} service{filteredServices.length !== 1 ? "s" : ""} available
-            {selectedCity !== "All Cities" ? ` in ${selectedCity}` : ""}
+            {filteredServices.length} service{filteredServices.length !== 1 ? "s" : ""} available in Bangalore
           </p>
         </div>
 
@@ -190,7 +174,7 @@ export default function HomePageClient({ services: allServices, cities: CITIES }
             {filteredServices.map((service) => (
               <Link
                 key={service}
-                href={`/services/${encodeURIComponent(service)}?city=${selectedCity}`}
+                href={`/services/${toServiceSlug(service)}?city=${selectedCity}`}
                 className="group"
               >
                 <div className="bg-white border-2 border-stone-200 rounded-2xl p-6 text-center hover:border-blue-400 hover:shadow-lg transition-all cursor-pointer h-full flex flex-col items-center justify-center">

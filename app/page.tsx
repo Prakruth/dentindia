@@ -3,19 +3,17 @@ import { getAllServices } from "@/lib/data";
 import HomePageClient from "@/components/HomePageClient";
 import type { Metadata } from "next";
 
-const CITIES = ["All Cities", "Mumbai", "Bengaluru", "Chennai", "Delhi"];
-
 export const metadata: Metadata = {
-  title: "Find Trusted Dental Clinics in India — Book Appointments Online",
+  title: "Find Trusted Dental Clinics in Bangalore — Book Appointments Online",
   description:
-    "Discover and book appointments with top-rated dental clinics across India. Compare dentists by service, price & rating in Mumbai, Delhi, Bengaluru, Chennai. Teeth cleaning, braces, implants & more.",
+    "Discover and book appointments with top-rated dental clinics in Bangalore. Compare dentists by service, price & rating. Teeth cleaning, braces, implants & more in Bengaluru.",
   alternates: {
     canonical: "https://dentobook.in",
   },
   openGraph: {
-    title: "Find Trusted Dental Clinics in India",
+    title: "Find Trusted Dental Clinics in Bangalore",
     description:
-      "Discover and book appointments with top-rated dental clinics across India. Compare by service, price & rating.",
+      "Discover and book appointments with top-rated dental clinics in Bangalore. Compare by service, price & rating.",
     url: "https://dentobook.in",
     type: "website",
   },
@@ -28,7 +26,7 @@ const websiteSchema = {
   alternateName: "Dentobook",
   url: "https://dentobook.in",
   description:
-    "Find and book appointments with trusted dental clinics across India.",
+    "Find and book appointments with trusted dental clinics in Bangalore.",
   potentialAction: {
     "@type": "SearchAction",
     target: {
@@ -46,10 +44,14 @@ const organizationSchema = {
   url: "https://dentobook.in",
   logo: "https://dentobook.in/logo.png",
   description:
-    "India's trusted platform for finding and booking dental clinic appointments.",
+    "Bangalore's trusted platform for finding and booking dental clinic appointments.",
   areaServed: {
-    "@type": "Country",
-    name: "India",
+    "@type": "City",
+    name: "Bangalore",
+    containedIn: {
+      "@type": "State",
+      name: "Karnataka",
+    },
   },
   serviceType: [
     "Dental Clinic Directory",
@@ -59,18 +61,18 @@ const organizationSchema = {
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "customer support",
-    areaServed: "IN",
-    availableLanguage: ["English", "Hindi"],
+    areaServed: "Bangalore",
+    availableLanguage: ["English", "Kannada", "Hindi"],
   },
 };
 
 const medicalWebPageSchema = {
   "@context": "https://schema.org",
   "@type": "MedicalWebPage",
-  name: "Dentobook — Find Trusted Dental Clinics in India",
+  name: "Dentobook — Find Trusted Dental Clinics in Bangalore",
   url: "https://dentobook.in",
   description:
-    "Find and book dental appointments across India. Browse clinics by city and compare services.",
+    "Find and book dental appointments in Bangalore. Browse clinics and compare services.",
   medicalAudience: {
     "@type": "Patient",
   },
@@ -82,7 +84,7 @@ const medicalWebPageSchema = {
 
 async function ServiceSearch() {
   const allServices = await getAllServices();
-  return <HomePageClient services={allServices} cities={CITIES} />;
+  return <HomePageClient services={allServices} />;
 }
 
 export default function HomePage() {
