@@ -45,8 +45,8 @@ export default function ClinicPageClient({
   };
 
   const handleWhatsAppClick = () => {
-    trackWhatsAppClick(clinicId, clinicName);
-    trackWhatsAppInitiated(clinicId, window.location.pathname);
+    trackWhatsAppClick(clinicId, clinicName, "clinic_cta_section");
+    trackWhatsAppInitiated(clinicId, window.location.pathname, "clinic_cta_section");
     trackLeadGenerated(clinicId, "whatsapp_click");
   };
 

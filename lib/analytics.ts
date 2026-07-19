@@ -349,19 +349,31 @@ export const trackCallInitiated = (clinicId: string, sourcePage: string) => {
   });
 };
 
-export const trackWhatsAppClick = (clinicId: string, clinicName: string) => {
+export const trackWhatsAppClick = (
+  clinicId: string,
+  clinicName: string,
+  buttonLocation?: string,
+  additionalParams?: Record<string, any>
+) => {
   sendEvent('whatsapp_clicked', {
     clinic_id: clinicId,
     clinic_name: clinicName,
+    button_location: buttonLocation || 'clinic_page',
     event_category: 'engagement',
     event_label: 'high_intent',
+    ...additionalParams,
   });
 };
 
-export const trackWhatsAppInitiated = (clinicId: string, sourcePage: string) => {
+export const trackWhatsAppInitiated = (
+  clinicId: string,
+  sourcePage: string,
+  buttonLocation?: string
+) => {
   sendEvent('whatsapp_initiated', {
     clinic_id: clinicId,
     source_page: sourcePage,
+    button_location: buttonLocation || 'unknown',
     event_category: 'lead_generation',
   });
 };
