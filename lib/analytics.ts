@@ -13,8 +13,21 @@ declare global {
 
 // Helper to send events to GA4
 const sendEvent = (eventName: string, parameters?: Record<string, any>) => {
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('event', eventName, parameters);
+  if (typeof window !== 'undefined') {
+    if (window.gtag) {
+      window.gtag('event', eventName, parameters);
+      // Debug logging (remove in production if needed)
+      console.log('[Analytics] Event fired:', eventName, parameters);
+    } else {
+      console.warn('[Analytics] gtag not loaded yet. Event:', eventName);
+      // Retry after a short delay if gtag isn't loaded
+      setTimeout(() => {
+        if (window.gtag) {
+          window.gtag('event', eventName, parameters);
+          console.log('[Analytics] Event fired (delayed):', eventName, parameters);
+        }
+      }, 500);
+    }
   }
 };
 
